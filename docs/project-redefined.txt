@@ -1,0 +1,73 @@
+Hostel 21
+
+1. Introduction : 
+
+		The purpose of the project is to give you the opportunity to practice the concepts discussed in this class. The requirements are purposely somewhat 
+	vague such that you can interact with the client (that's your instructor) to figure out the detailed requirements.
+	
+	
+2. Acceptance Criteria
+
+		The basic implementation of the project assumes the application runs locally, on a single computer shared between all employees. This is, of course, 
+	unrealistic, however it will allow you to get the basic functionality done without having to worry about access control, or how to connect to a remote 
+	computer from your local client running the application, etc. For any additional work you do, you can get extra credit, as described below.
+	
+	The GUI for your application will be written in Swing if you use Java for your project: you can see a mockup -- not complete -- here. 
+	If you use a different programming language, then find the equivalent GUI framework and use it.
+	
+	Of course the application logic should have no dependency on how data will be presented. Your project should work equally well with a command 
+	line interface, like the one described here.
+	
+	To help with project testing here is an XML file with tour definitions: load the tours from this file instead of creating them by hand through the GUI.
+
+3. Questions and Answers
+
+	Check here for answers before asking your TA or teacher.
+
+4. Extra Credit
+
+		The main purpose of this project is to practice object-oriented analysis, design and programming, not to teach you web development frameworks or relational 
+	databases. As such, you do not have to develop a web interface for this project, nor do you have to interface with a real relational database.
+
+
+
+The web interface will be tested using Firefox 19+ or Chrome.
+
+5. Project Description
+
+	I am the owner of the "Hostel 21" a chain of classy hostels all over the world.
+	
+	Quite frankly I'm tired of doing reservations with pen on paper and having to be always on the phone or have one of my employees on the phone.	
+	I need software that helps me manage my hostel reservations.
+	
+	For each of the hostels in my chain I want to be able to define availability and price: for example for Hostel 21 in Frankfurt, Germany, located at 
+	this-and-that address I could say "10/3/2013, room 1, bed 2, $25", or "10/4/2013, room 2, bed 7, $31" etc.
+	
+	All prices are in US dollars, though in the future I may want to take payment in the local currency.
+	
+	When people call to make a reservation, I should be able to look up what's available in the town they want and book them for a bed or more, 
+	for the duration of their stay.
+	
+	When people call to make a reservation I'll need some of their personal information such that we can process payment; in addition we'll need an 
+	email address such that we can contact them before the trip starts, in addition to shameless propaganda after they stay at our hostel(s). 
+	Having their Twitter handle and Facebook username will enhance our ability to connect with our customers.
+	
+	Once a customer books space, I'd like to send her a notification with the details of their booking. Later on I'd like the notification to include 
+	information about cool stuff that can be done while in town.
+	
+	For all intents and purposes, the email address is what I use to locate orders in the system, though I may as well use their Twitter handle or Facebook 
+	username if I have them.
+	
+	People who have booked space on our hostels can call to cancel. When a booking is canceled the space becomes immediately available and we should 
+	send the customer a notification that the booking has been canceled.
+	
+	Each hostel may have its own deadline for cancelation, e.g. "two days before the trip starts" and fee for late cancelation, e.g. "$5 late cancelation fee."
+	
+	Each hostel has its own check-in and check-out policy as well.
+	
+	The other thing that I need is some sense of how we're doing as a business. So, I should be able to search for a specific date or date range and see 
+	how many bookings we have and how much revenue is associated with those bookings. Also, find out how many cancellations we've had for the same time frame. 
+	What is the occupancy rate in our hostels?
+	
+	Oh, one more thing, every time I look up a customer's booking, I should be able to see if they are repeat-customers and how much money they've 
+	spent with us in the past.
