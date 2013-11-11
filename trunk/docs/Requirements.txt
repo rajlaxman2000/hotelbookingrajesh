@@ -1,0 +1,39 @@
+Project Description : 
+
+	1.	I am the owner of the "Hostel 21" a chain of classy hostels all over the world.
+		
+		Quite frankly I'm tired of doing reservations with pen on paper and having to be always on the phone or have one of my employees on the phone.	
+		I need software that helps me manage my hostel reservations.
+		
+	2.	For each of the hostels in my chain I want to be able to define availability and price: for example for Hostel 21 in Frankfurt, Germany, located at 
+		this-and-that address I could say "10/3/2013, room 1, bed 2, $25", or "10/4/2013, room 2, bed 7, $31" etc.
+		
+	3.	All prices are in US dollars, though in the future I may want to take payment in the local currency.
+		
+	4.	When people call to make a reservation, I should be able to look up what's available in the town they want and book them for a bed or more, 
+		for the duration of their stay.
+		
+	5.	When people call to make a reservation I'll need some of their personal information such that we can process payment; in addition we'll need an 
+		email address such that we can contact them before the trip starts, in addition to shameless propaganda after they stay at our hostel(s). 
+		Having their Twitter handle and Facebook username will enhance our ability to connect with our customers.
+		
+	6.	Once a customer books space, I'd like to send him/her a notification with the details of their booking. Later on I'd like the notification to include 
+		information about cool stuff that can be done while in town.
+		
+	7.	For all intents and purposes, the email address is what I use to locate orders in the system, though I may as well use their Twitter handle or Facebook 
+		username if I have them.
+		
+	8.	People who have booked space on our hostels can call to cancel. When a booking is canceled the space becomes immediately available and we should 
+		send the customer a notification that the booking has been canceled.
+		
+	9.	Each hostel may have its own deadline for cancelation, e.g. "two days before the trip starts" and fee for late cancelation, e.g. "$5 late cancelation fee."
+		
+	10.	Each hostel has its own check-in and check-out policy as well.
+		
+	11.	The other thing that I need is some sense of how we're doing as a business. So, I should be able to search for a specific date or date range and see 
+		how many bookings we have and how much revenue is associated with those bookings. Also, find out how many cancellations we've had for the same time frame. 
+		What is the occupancy rate in our hostels?
+		
+	12.	Oh, one more thing, every time I look up a customer's booking, I should be able to see if they are repeat-customers and how much money they've 
+		spent with us in the past.
+	==========================================================================================================================================
