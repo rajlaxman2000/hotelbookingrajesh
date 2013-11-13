@@ -15,7 +15,11 @@
         	<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
       	</result-types>
       	
-        <action name="login" class="com.hostel.action.SampleAction">
+      	<action name="index">
+            <result type="tiles">login</result>           
+        </action>
+        
+        <action name="login" class="login.action">
             <result name="success">/WEB-INF/jsp/Welcome-2.jsp</result>
             <result name="error">/WEB-INF/jsp/Login-2.jsp</result>
         </action>

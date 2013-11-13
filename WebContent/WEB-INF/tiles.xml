@@ -6,27 +6,30 @@
 
 <tiles-definitions>
 
-  <definition name="baseLayout" template="/baseLayout.jsp">
+  <definition name="baseLayout" template="/WEB-INF/jsp/tiles-integ/baseLayout.jsp">
       <put-attribute name="title"  value="Template"/>
-      <put-attribute name="header" value="/header.jsp"/>
-      <put-attribute name="menu"   value="/menu.jsp"/>
-      <put-attribute name="body"   value="/body.jsp"/>
-      <put-attribute name="footer"   value="/footer.jsp"/>
+      <put-attribute name="header" value="/WEB-INF/jsp/tiles-integ/header.jsp"/>
+      <put-attribute name="menu"   value="/WEB-INF/jsp/tiles-integ/menu.jsp"/>
+      <put-attribute name="body"   value="/WEB-INF/jsp/tiles-integ/body.jsp"/>
+      <put-attribute name="footer"   value="/WEB-INF/jsp/tiles-integ/footer.jsp"/>
   </definition>
   
   <definition name="welcome" extends="baseLayout">
       <put-attribute name="title"  value="Welcome"/>
-      <put-attribute name="body"   value="/welcome.jsp"/>      
+      <put-attribute name="body"   value="/WEB-INF/jsp/tiles-integ/welcome.jsp"/>      
   </definition>
   
   <definition name="friends" extends="baseLayout">
       <put-attribute name="title"  value="Friends"/>
-      <put-attribute name="body"   value="/friends.jsp"/>      
+      <put-attribute name="body"   value="/WEB-INF/jsp/tiles-integ/friends.jsp"/>      
   </definition>
   
   <definition name="office" extends="baseLayout">
       <put-attribute name="title"  value="Office"/>
-      <put-attribute name="body"   value="/office.jsp"/>      
+      <put-attribute name="body"   value="/WEB-INF/jsp/tiles-integ/office.jsp"/>      
   </definition>
+  
+   <definition name="login" template="/WEB-INF/jsp/Login-2.jsp"/>
+     
   
 </tiles-definitions>
