@@ -12,7 +12,10 @@
    </listener>
    	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/resources/spring/spring-beans-actions.xml</param-value>
+		<param-value>
+			/WEB-INF/resources/spring/spring-beans-actions.xml,
+			/WEB-INF/resources/spring/spring-beans-dao.xml
+		</param-value>
 	</context-param> 
    <!--
    	<context-param>
