@@ -1,4 +1,4 @@
-package com.hostel.service;
+package com.hostel.sample;
 
 public interface SampleServiceInterface {
 
