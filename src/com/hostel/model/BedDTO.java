@@ -7,7 +7,7 @@ public class BedDTO {
 	private int bedId;
 	private String bedName;
 	private List<BedCostDTO> costDTOs;
-	private float defaultCost;
+	
 	
 	/**
 	 * @return the bedId

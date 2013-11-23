@@ -5,7 +5,7 @@ import java.util.List;
 public class RoomDTO {
 	
 	private int roomId;
-	private String roomName;
+	private String roomName;	
 	private List<BedDTO> beds;
 	
 	/**

@@ -1,4 +1,4 @@
-package com.hostel.service.impl;
+package com.hostel.sample;
 
 public class SampleServiceImpl {
 

@@ -1,4 +1,4 @@
-package com.hostel.action;
+package com.hostel.sample;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class SampleAction extends ActionSupport {
