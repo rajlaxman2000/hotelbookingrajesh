@@ -7,8 +7,36 @@
 	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
 	    <property name="url" value="jdbc:mysql://localhost:3306/hostel" />
-	    <property name="username" value="admin" />
-	    <property name="password" value="admin" />
+	    <property name="username" value="root" />
+	    <property name="password" value="" />
 	</bean>	
+	
+	<bean id="genericDAO" class="com.hostel.dao.impl.GenericDAO" abstract="true">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="genericRowMapper" class="com.hostel.dao.impl.GenericRowMapper" abstract="true"/>
+	<bean id="hostelRowMapper" class="com.hostel.dao.impl.HostelRowMapper" parent="genericRowMapper"/>
+	<bean id="roomRowMapper" class="com.hostel.dao.impl.RoomRowMapper" parent="genericRowMapper"/>
+	<bean id="bedRowMapper" class="com.hostel.dao.impl.BedRowMapper" parent="genericRowMapper"/>
+	
+	<bean id="hostel.dao" class="com.hostel.dao.impl.HostelDAOImpl" parent="genericDAO" scope="prototype">     	
+     	<property name="hostelRowMapper" ref="hostelRowMapper"/>
+     </bean>
+     
+     <bean id="room.dao" class="com.hostel.dao.impl.RoomDAOImpl" parent="genericDAO" scope="prototype">     	
+     	<property name="roomRowMapper" ref="roomRowMapper"/>     	
+     </bean>
+     
+     <bean id="bed.dao" class="com.hostel.dao.impl.BedDAOImpl" parent="genericDAO" scope="prototype">     	
+     	<property name="bedRowMapper" ref="bedRowMapper"/>
+     </bean>
+     
+     <!--
+     <bean id="agentRowMapper" 	scope="prototype" class="com.drp.services.dao.rowmapper.AgentRowMapper" parent="genericRowMapper"/> 
+     <bean id="agentDAO" class="com.drp.services.dao.impl.AgentInfoDAOImpl" parent="genericDAO" scope="prototype">
+		<property name="rowMapper" ref="agentRowMapper"/>
+	</bean>
+      -->
 	
 </beans>

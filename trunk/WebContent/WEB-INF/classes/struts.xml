@@ -24,11 +24,22 @@
             <result name="error">/WEB-INF/jsp/Login-2.jsp</result>
         </action>
         
-        <action name="*Link" method="{1}" class="com.hostel.action.LinkAction">
+        <action name="*Link" method="{1}" class="link.action">
 			<result name="welcome" type="tiles">welcome</result>
 			<result name="friends" type="tiles">friends</result>
 			<result name="office" type="tiles">office</result>
 		</action>
+		
+		<action name="hostel" class="hostel.action">
+            <result name="success">/WEB-INF/jsp/hostel.jsp</result>            
+        </action>
+        
+        <action name="rooms" class="room.action">
+            <result name="success">/WEB-INF/jsp/hostel_roms_beds.jsp</result>            
+        </action>
+        
+        
+        
 		<!-- 
         <action name="*Menu" method="{1}" class="com.hostel.action.SampleMenuAction">
         	<result name="tiger" type="tiles">tiger</result>
