@@ -1,5 +1,6 @@
 package com.hostel.util;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Arrays;
@@ -30,5 +31,15 @@ public abstract class AllCmdMaps {
     	  put("admin_occupancy",new ArrayList<String>(Arrays.asList("start_date","end_date")));
     	}};
     	
+    public static Date getDateByXmlString(String val ){
+    	
+    	StringBuilder dateStringBuilder = new StringBuilder();
+		//(yyyy-mm-dd)
+		//20140701
+		dateStringBuilder.append(val.substring(0,4)).append("-").append(val.substring(6)).append("-").append(val.substring(4,6));								
+		
+		return Date.valueOf(dateStringBuilder.toString());
+    	
+    }
     //TODO: Like to write some date util methods	
 }
