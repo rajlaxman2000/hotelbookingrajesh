@@ -1,19 +1,21 @@
 package com.hostel.commandline;
 
-import java.util.HashMap;
 import java.util.Map;
-import com.hostel.service.impl.XmlUploadService;
-import com.hostel.service.impl.XmlUploadServiceImpl;
+
+import com.hostel.service.HostelService;
+import com.hostel.service.XmlUploadService;
+
 
 public class CommandProcessor {
 	
-	public XmlUploadServiceImpl xmlUploadService;
+	public XmlUploadService xmlUploadService;
 	
-	public void callAdminLoadMethod(CommandDTO commandDTO){
-		xmlUploadService = new XmlUploadServiceImpl();
-		//fileNameWithPath = new String("C:\\Users\\rajesh_duvvi\\Desktop\\Geetha\\Project\\hostel-inventory-1-20131117.XML");
-		String s = xmlUploadService.uploadXmlByPath(commandDTO.getCmdParams().get("path"));
+	public HostelService hostelService;
+	
+	public void adminLoadMethod(CommandDTO commandDTO){
 		
+		//fileNameWithPath = new String("C:\\Users\\rajesh_duvvi\\Desktop\\Geetha\\Project\\hostel-inventory-1-20131117.XML");
+		String s = xmlUploadService.uploadXmlByPath(commandDTO.getCmdParams().get("path"));		
 	}
 	
 	/*
@@ -40,7 +42,7 @@ public class CommandProcessor {
 			
 		}
 		else if(cmdStr.equalsIgnoreCase("admin_load")){
-			callAdminLoadMethod(commandDTO);
+			adminLoadMethod(commandDTO);
 		}
 		else if(cmdStr.equalsIgnoreCase("admin_revenue")){
 				
@@ -101,6 +103,37 @@ public class CommandProcessor {
 	
 	public void processAdminCmd(){
 		
+	}
+
+	
+
+
+	/**
+	 * @return the xmlUploadService
+	 */
+	public XmlUploadService getXmlUploadService() {
+		return xmlUploadService;
+	}
+
+	/**
+	 * @param xmlUploadService the xmlUploadService to set
+	 */
+	public void setXmlUploadService(XmlUploadService xmlUploadService) {
+		this.xmlUploadService = xmlUploadService;
+	}
+
+	/**
+	 * @return the hostelService
+	 */
+	public HostelService getHostelService() {
+		return hostelService;
+	}
+
+	/**
+	 * @param hostelService the hostelService to set
+	 */
+	public void setHostelService(HostelService hostelService) {
+		this.hostelService = hostelService;
 	}
 	
 	

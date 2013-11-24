@@ -10,6 +10,8 @@ public interface HostelDAO {
 	
 	public HostelDTO getHostelDetailsById(int hostelId) throws Exception;
 	
+	public int insertHostel(HostelDTO hostelDTO) throws Exception;
+	
 	public final String getHostelsQuery="select hostel_id, hostel_name from hostel";
 	
 	public final String getHostelDetailsByIdQuery="select h.hostel_id, h.hostel_name, a.address_line_no1, a.address_line_no2, a.city, a.country from hostel h " +

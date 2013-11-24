@@ -3,15 +3,10 @@ package com.hostel.service.impl;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.text.DateFormat;
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
@@ -112,15 +107,9 @@ public class ReadXMLFile {
 					if(!val.isEmpty() ){
 						if(availbleNodeNames.contains(paramName)){
 							if(paramName.equalsIgnoreCase("date")){
-								
-								SimpleDateFormat sdf = new SimpleDateFormat("yyyyddmm");								
-			                    try {
-									sdf.parse(val);
-									availableDTO.setDate(sdf.parse(val));
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}                  
+								StringBuilder dateStringBuilder = new StringBuilder();
+								dateStringBuilder.append(val.substring(0,3)).append("-").append(val.substring(6,7)).append("-").append(val.substring(4,5));
+								availableDTO.setDate(Date.valueOf(dateStringBuilder.toString()));
 							}else if(paramName.equalsIgnoreCase("room")){	
 								availableDTO.setRoomName("room-"+val);
 							}else if(paramName.equalsIgnoreCase("bed")){	

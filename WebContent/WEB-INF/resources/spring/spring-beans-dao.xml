@@ -6,7 +6,7 @@
 						   
 	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-	    <property name="url" value="jdbc:mysql://localhost:3306/hostel" />
+	    <property name="url" value="jdbc:mysql://localhost:3306/hostellatest" />
 	    <property name="username" value="root" />
 	    <property name="password" value="" />
 	</bean>	
@@ -15,11 +15,13 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
-	<bean id="genericRowMapper" class="com.hostel.dao.impl.GenericRowMapper" abstract="true"/>
-	<bean id="hostelRowMapper" class="com.hostel.dao.impl.HostelRowMapper" parent="genericRowMapper"/>
-	<bean id="roomRowMapper" class="com.hostel.dao.impl.RoomRowMapper" parent="genericRowMapper"/>
-	<bean id="bedRowMapper" class="com.hostel.dao.impl.BedRowMapper" parent="genericRowMapper"/>
+	<bean id="genericRowMapper" class="com.hostel.dao.rowmapper.GenericRowMapper" abstract="true"/>
+	<bean id="hostelRowMapper" class="com.hostel.dao.rowmapper.HostelRowMapper" parent="genericRowMapper"/>
+	<bean id="roomRowMapper" class="com.hostel.dao.rowmapper.RoomRowMapper" parent="genericRowMapper"/>
+	<bean id="bedRowMapper" class="com.hostel.dao.rowmapper.BedRowMapper" parent="genericRowMapper"/>
+	<bean id="bedCostRowMapper" class="com.hostel.dao.rowmapper.BedCostRowMapper" parent="genericRowMapper"/>
 	
+	<!-- hostel.dao,room.dao,bed.dao,bedCost.dao -->
 	<bean id="hostel.dao" class="com.hostel.dao.impl.HostelDAOImpl" parent="genericDAO" scope="prototype">     	
      	<property name="hostelRowMapper" ref="hostelRowMapper"/>
      </bean>
@@ -32,11 +34,7 @@
      	<property name="bedRowMapper" ref="bedRowMapper"/>
      </bean>
      
-     <!--
-     <bean id="agentRowMapper" 	scope="prototype" class="com.drp.services.dao.rowmapper.AgentRowMapper" parent="genericRowMapper"/> 
-     <bean id="agentDAO" class="com.drp.services.dao.impl.AgentInfoDAOImpl" parent="genericDAO" scope="prototype">
-		<property name="rowMapper" ref="agentRowMapper"/>
-	</bean>
-      -->
-	
+     <bean id="bedCost.dao" class="com.hostel.dao.impl.BedCostDAOImpl" parent="genericDAO" scope="prototype">     	
+     	<property name="bedCostRowMapper" ref="bedCostRowMapper"/>
+     </bean>
 </beans>

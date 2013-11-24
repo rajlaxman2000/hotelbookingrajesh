@@ -1,28 +1,18 @@
 package com.hostel.service.impl;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-
-
 import com.hostel.model.BedCostDTO;
 import com.hostel.model.BedDTO;
 import com.hostel.model.HostelDTO;
 import com.hostel.model.RoomDTO;
+import com.hostel.service.HostelService;
 import com.hostel.service.XmlUploadService;
 
 
 public class XmlUploadServiceImpl implements XmlUploadService {
 	
 	private ReadXMLFile readXMLFile;
+	
+	private HostelService hostelService;
+	
 	
 	
 	@Override
@@ -33,6 +23,15 @@ public class XmlUploadServiceImpl implements XmlUploadService {
 			fileNameWithPath.replace("\\","/");
 			HostelDTO hostelDTO= ReadXMLFile.uploadXML(fileNameWithPath);
 			
+			if(hostelDTO!=null){
+				try {
+					int hostelId = hostelService.insertHostel(hostelDTO);
+					hostelDTO.setHostelId(hostelId);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			//call service classes to insert hostel details into DB
 			
 			System.out.println("Hostel details ");
@@ -68,6 +67,20 @@ public class XmlUploadServiceImpl implements XmlUploadService {
 	 */
 	public void setReadXMLFile(ReadXMLFile readXMLFile) {
 		this.readXMLFile = readXMLFile;
+	}
+
+	/**
+	 * @return the hostelService
+	 */
+	public HostelService getHostelService() {
+		return hostelService;
+	}
+
+	/**
+	 * @param hostelService the hostelService to set
+	 */
+	public void setHostelService(HostelService hostelService) {
+		this.hostelService = hostelService;
 	}
 	
 	

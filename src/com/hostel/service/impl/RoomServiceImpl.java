@@ -6,6 +6,7 @@ import com.hostel.dao.BedDAO;
 import com.hostel.dao.RoomDAO;
 import com.hostel.model.BedDTO;
 import com.hostel.model.RoomDTO;
+import com.hostel.service.BedService;
 import com.hostel.service.RoomService;
 
 public class RoomServiceImpl implements RoomService{
@@ -13,7 +14,24 @@ public class RoomServiceImpl implements RoomService{
 	private RoomDAO roomDAO;
 	
 	private BedDAO bedDAO;
-
+	
+	private BedService bedService;
+	
+	@Override
+	public int insertUpdateRoom(RoomDTO roomDTO, int hostelId) throws Exception {
+		
+		int roomId;
+		try {
+			roomId = roomDAO.InsertRoom(roomDTO,hostelId);
+			for(BedDTO bed : roomDTO.getBeds()){
+				bedService.insertUpdateBed(bed, roomId);
+			}	
+		} catch (Exception e) {
+			throw new Exception(e.getMessage(), e);
+		}
+		return roomId;
+	}
+	
 	@Override
 	public List<RoomDTO> getRooms(int hostelId) throws Exception{
 		List<RoomDTO> rooms;
@@ -39,11 +57,6 @@ public class RoomServiceImpl implements RoomService{
 		return null;
 	}
 
-	@Override
-	public boolean insertUpdateRoom(RoomDTO roomDTO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	/**
 	 * @return the roomDAO
@@ -72,6 +85,22 @@ public class RoomServiceImpl implements RoomService{
 	public void setBedDAO(BedDAO bedDAO) {
 		this.bedDAO = bedDAO;
 	}
+
+	/**
+	 * @return the bedService
+	 */
+	public BedService getBedService() {
+		return bedService;
+	}
+
+	/**
+	 * @param bedService the bedService to set
+	 */
+	public void setBedService(BedService bedService) {
+		this.bedService = bedService;
+	}
+
+	
 	
 	
 

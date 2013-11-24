@@ -6,10 +6,10 @@ import com.hostel.model.BedDTO;
 
 public interface BedService {
 	
-	public List<BedDTO> getBeds(int roomId);
+	public List<BedDTO> getBeds(int roomId) throws Exception;
 	
-	public BedDTO getBedDetails(int bedId);
+	public BedDTO getBedDetails(int bedId)throws Exception;
 	
-	public boolean insertUpdateBed(BedDTO bedDTO);	
+	public int insertUpdateBed(BedDTO bedDTO, int roomId) throws Exception;	
 
 }
