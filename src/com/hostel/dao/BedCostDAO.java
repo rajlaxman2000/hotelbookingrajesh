@@ -13,8 +13,8 @@ public List<BedDTO> getBedsByRoomId(int roomId) throws Exception;
 	
 	public boolean insertBedCosts(List <BedCostDTO> bedCostDTOs, int bedId) throws Exception;
 		
-	public final String getBedcostsQuery="select bed_id, date_range1, date_range2, price from bed_cost where bed_id=:bedId";
+	public final String getBedcostsQuery="select bed_id, date_range1, date_range2, bed_cost from bed_cost where bed_id=:bedId";
 	//insert into sample values (1,20,50),(2,30,60),(3,22,80)
-	public final String insertBedCostsQuery="insert into bed_cost values ";
+	public final String insertBedCostsQuery="insert into bed_cost (bed_id, date1, date2, bed_cost) values ";
 
 }

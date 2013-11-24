@@ -7,8 +7,8 @@ public class BedCostDTO {
 	private int bedId;
 	private Date dateRange1;
 	private Date dateRange2;
-	private Date dateRange1Str;
-	private Date dateRange2Str;
+	private String dateRange1Str;
+	private String dateRange2Str;
 	private float bedCost;
 	
 	
@@ -28,25 +28,25 @@ public class BedCostDTO {
 	/**
 	 * @return the dateRange1Str
 	 */
-	public Date getDateRange1Str() {
+	public String getDateRange1Str() {
 		return dateRange1Str;
 	}
 	/**
 	 * @param dateRange1Str the dateRange1Str to set
 	 */
-	public void setDateRange1Str(Date dateRange1Str) {
+	public void setDateRange1Str(String dateRange1Str) {
 		this.dateRange1Str = dateRange1Str;
 	}
 	/**
 	 * @return the dateRange2Str
 	 */
-	public Date getDateRange2Str() {
+	public String getDateRange2Str() {
 		return dateRange2Str;
 	}
 	/**
 	 * @param dateRange2Str the dateRange2Str to set
 	 */
-	public void setDateRange2Str(Date dateRange2Str) {
+	public void setDateRange2Str(String dateRange2Str) {
 		this.dateRange2Str = dateRange2Str;
 	}
 	/**

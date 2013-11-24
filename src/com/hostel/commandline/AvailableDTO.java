@@ -4,11 +4,26 @@ import java.sql.Date;
 
 public class AvailableDTO implements Comparable<AvailableDTO>{
 	private Date date;
+	private String dateStr;
 	private String roomName;
 	private String bedName;
 	private float price;
 	
 	
+	/**
+	 * @return the dateStr
+	 */
+	public String getDateStr() {
+		return dateStr;
+	}
+
+	/**
+	 * @param dateStr the dateStr to set
+	 */
+	public void setDateStr(String dateStr) {
+		this.dateStr = dateStr;
+	}
+
 	@Override
 	public int compareTo(AvailableDTO dto) {
 		
