@@ -10,4 +10,6 @@ public interface HostelService {
 	
 	public HostelDTO getHostelDetails(int hostelId) throws Exception;
 	
+	public int insertHostel(HostelDTO hostelDTO) throws Exception;
+	
 }

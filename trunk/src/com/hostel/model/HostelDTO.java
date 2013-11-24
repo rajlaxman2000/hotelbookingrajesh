@@ -5,7 +5,12 @@ import java.util.List;
 public class HostelDTO {
 	
 	private int hostelId;
-	private String hostelName;
+	private String hostelName;	
+	private String adrStreet;
+	private String adrCity;
+	private String adrState;
+	private String adrPostalCode;
+	private String adrCountry;
 	private String phone;
 	private String email;
 	private String facebook;
@@ -16,11 +21,7 @@ public class HostelDTO {
 	private String checkOutTime;
 	private String alcohol;
 	private String smoking;	
-	private String adrStreet;
-	private String adrCity;
-	private String adrState;
-	private String adrPostalCode;
-	private String adrCountry;
+
 	private List<RoomDTO> rooms;
 	
 	

@@ -1,4 +1,4 @@
-package com.hostel.model.command;
+package com.hostel.test;
 
 public class ArgParam {
 	private String name;

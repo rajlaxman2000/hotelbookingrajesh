@@ -1,8 +1,8 @@
 package com.hostel.test;
 
-import com.hostel.mailservice.EmailSendingService;
-import com.hostel.mailservice.EmailSendingServiceImpl;
+
 import com.hostel.model.MailDTO;
+import com.hostel.util.*;
 
 
 public class MailTest {

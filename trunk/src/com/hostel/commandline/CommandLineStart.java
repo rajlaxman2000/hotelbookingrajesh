@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import org.springframework.expression.spel.generated.SpringExpressionsParser.startNode_return;
 
-import com.hostel.model.command.AllCmdMaps;
+import com.hostel.util.AllCmdMaps;
 
 //import java.util.Scanner;
 

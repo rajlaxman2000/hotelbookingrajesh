@@ -1,4 +1,4 @@
-package com.hostel.model.command;
+package com.hostel.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
