@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 
 
 
+import com.hostel.model.BedCostDTO;
 import com.hostel.model.BedDTO;
 import com.hostel.model.HostelDTO;
 import com.hostel.model.RoomDTO;
@@ -26,26 +27,32 @@ public class XmlUploadServiceImpl implements XmlUploadService {
 	@Override
 	public String uploadXmlByPath(String fileNameWithPath) {
 		
-		String resultStr = null;
-		fileNameWithPath = new String("C:\\Users\\rajesh_duvvi\\Desktop\\Geetha\\Project\\hostel-inventory-1-20131117.XML");
-		fileNameWithPath.replace("\\","/");
+		String resultStr = null;		
+		if(!fileNameWithPath.isEmpty() && fileNameWithPath.contains(".XML")){
+			fileNameWithPath.replace("\\","/");
+			HostelDTO hostelDTO= ReadXMLFile.uploadXML(fileNameWithPath);
 			
-				
-		readXMLFile  = new ReadXMLFile();
-		readXMLFile.uploadXML(fileNameWithPath);
-		/*
-		System.out.println("Hostel details ");
-		System.out.println("Hostel name:"+hostelDTO.getHostelName());
-		System.out.println("Hostel addd  street:"+hostelDTO.getAdrStreet());
-		System.out.println("Hostel check in"+hostelDTO.getCheckInTime());
-		System.out.println("Rooms :: ");
-		for(RoomDTO room : hostelDTO.getRooms()){
-			System.out.println("Room name::"+room.getRoomName());
-			for(BedDTO bed: room.getBeds()){
-				System.out.println("Bed name::"+room.getRoomName());
+			//call service classes to insert hostel details into DB
+			
+			System.out.println("Hostel details ");
+			System.out.println("Hostel name:"+hostelDTO.getHostelName());
+			System.out.println("Hostel addd  street:"+hostelDTO.getAdrStreet());
+			System.out.println("Hostel check in"+hostelDTO.getCheckInTime());
+			System.out.println("Rooms :: ");
+			for(RoomDTO room : hostelDTO.getRooms()){
+				System.out.println("Room name::"+room.getRoomName());
+				for(BedDTO bed: room.getBeds()){
+					System.out.println("	Bed name::"+bed.getBedName());
+					for(BedCostDTO costDTO : bed.getCostDTOs()){
+						System.out.println("	Bed Date ::"+costDTO.getDateRange1());
+						System.out.println("	Bed Cost ::"+costDTO.getBedCost());
+					}
+				}
 			}
-		}	*/
-		return resultStr;
+		}else{
+			System.out.println("File path can't be empty  or please provide XML file path only or make sure file has proper file extension");
+		}
+		return "This message is not going to be used";
 	}
 
 	/**

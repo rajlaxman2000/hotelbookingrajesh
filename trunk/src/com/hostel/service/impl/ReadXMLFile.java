@@ -25,50 +25,28 @@ import com.hostel.model.RoomDTO;
  
 public class ReadXMLFile {
    
-	static List<AvailableDTO> mainAvailableDTOs;	
-	static Map<String, String> mainParams;
-	
-	static HostelDTO hostelDTO;
+   static List<AvailableDTO> mainAvailableDTOs;	
+   static Map<String, String> mainParams;	
+   static HostelDTO hostelDTO;
+   
    
    public ReadXMLFile(){
 	   mainParams = new HashMap<String, String>();
 	   mainAvailableDTOs = new ArrayList<AvailableDTO>();
    }
+   
    public static void updateClassVars(Map<String, String> params, List<AvailableDTO> availDTOs){
 	   mainParams = params;
-	   mainAvailableDTOs = availDTOs;
-	   
+	   mainAvailableDTOs = availDTOs;	   
    }
-   public static void uploadXML(String path){
-	  
-		HostelDTO hostelDTO = geHostelDTOByXML(path);
-		
-		
-		System.out.println("Hostel details ");
-		System.out.println("Hostel name:"+hostelDTO.getHostelName());
-		System.out.println("Hostel addd  street:"+hostelDTO.getAdrStreet());
-		System.out.println("Hostel check in"+hostelDTO.getCheckInTime());
-		System.out.println("Rooms :: ");
-		for(RoomDTO room : hostelDTO.getRooms()){
-			System.out.println("Room name::"+room.getRoomName());
-			for(BedDTO bed: room.getBeds()){
-				System.out.println("	Bed name::"+bed.getBedName());
-				for(BedCostDTO costDTO : bed.getCostDTOs()){
-					System.out.println("	Bed Date ::"+costDTO.getDateRange1());
-					System.out.println("	Bed Cost ::"+costDTO.getBedCost());
-				}
-			}
-		}	
-		
-   }
-   public static HostelDTO geHostelDTOByXML(String filePath){
+   
+   public static HostelDTO uploadXML(String filePath){	  
 	   processXML(filePath);
 	   hostelDTO = ReadXMLFile.buildHostelDTO(mainParams,mainAvailableDTOs);
-	   return hostelDTO;
-	   
+	   return hostelDTO;		
    }
- 
-    public static void processXML(String filePath) {
+
+   public static void processXML(String filePath) {
      
 	    try {
 	 
@@ -167,12 +145,8 @@ public class ReadXMLFile {
      
    }
     
-    public static HostelDTO buildHostelDTO(Map<String, String> paramMaps, List<AvailableDTO> dtos){
+    public static HostelDTO buildHostelDTO(Map<String, String> paramMaps, List<AvailableDTO> dtos){    	
     	
-    	/*
-    	 *  ArrayList<String> nodeNames = new ArrayList<String>(Arrays.asList("name","street","city", "state","postal_code","phone","email","facebook","web"
-	    		,"check_in_time","check_out_time","smoking","alcohol","cancellation_deadline","cancellation_penalty","date","room","bed", "cost"));
-    	 */
     	HostelDTO hostelDTO= new HostelDTO();
     	hostelDTO.setHostelId(0);
     	hostelDTO.setHostelName(paramMaps.get("name"));
@@ -204,6 +178,7 @@ public class ReadXMLFile {
     	
     	ArrayList<RoomDTO> rooms = new ArrayList<RoomDTO>();
     	RoomDTO room=null;
+    	
     	StringBuffer roomNamesList = new StringBuffer();
     	
     	BedCostDTO bedCostDTO = null;		
@@ -262,8 +237,7 @@ public class ReadXMLFile {
 			//End : Adding bed costs to a map
     	}
     	
-    	
-    	
+    	//Doing the final association to the rooms with their respective beds and its bedCosts
     	for (RoomDTO roomDto :  rooms){
     		roomDto.setBeds(bedsMap.get(roomDto.getRoomName()));
     		for(BedDTO bedDTO : roomDto.getBeds()){
@@ -271,8 +245,6 @@ public class ReadXMLFile {
     			bedDTO.setCostDTOs(bedCostsMap.get(keyStr));
     		}
     	}
-    	
-    	
     	return rooms;
     }
     

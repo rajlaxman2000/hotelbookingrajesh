@@ -45,10 +45,12 @@ public class CommandLineStart {
 		String command = scanner.nextLine(); 
 		
 		CommandDTO commandDTO = processCmdString(command.trim());
-		boolean result  = validateCommandDTO(commandDTO);
-		System.out.println("command sytax result :"+result);
-		commandProcessor.startProcessing(commandDTO);
-		
+		boolean result  = validateCommandDTO(commandDTO);		
+		if(result){
+			commandProcessor.startProcessing(commandDTO);
+		}else{
+			System.out.println("Please provide the correct command to execute further, type 'exit' to quit");
+		}
 	}	
 	
 	public static CommandDTO processCmdString(String cmd){		
@@ -70,13 +72,7 @@ public class CommandLineStart {
 		commandDTO.setCmdParams(params);
 		return commandDTO;
 	}
-	/*
-	 * Commands
-    search
-    book add, cancel, view
-    user add, change, view
-    admin load, revenue, occupancy
-	 */
+	
 	public static boolean validateCommandDTO(CommandDTO commandDTO){
 		
 		boolean result = false; 
@@ -112,8 +108,7 @@ public class CommandLineStart {
 			if (result == false){
 				break;
 			}
-		}
-		//givenParms.keySet().containsAll(actualParams);
+		}		
 		return result;
 	}
 	
