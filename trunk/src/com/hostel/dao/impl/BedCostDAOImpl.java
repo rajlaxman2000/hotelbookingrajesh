@@ -16,22 +16,19 @@ public class BedCostDAOImpl extends GenericDAO implements BedCostDAO  {
 	public boolean insertBedCosts(List<BedCostDTO> bedCostDTOs, int bedId) throws Exception {		
 		boolean result = true;
 		StringBuilder valuesStr = new StringBuilder();
-		valuesStr.append(insertBedCostsQuery);
+		StringBuilder valuesStr1 = new StringBuilder();
+		valuesStr1.append(insertBedCostsQuery);
 		
-		for(BedCostDTO bedCostDTO: bedCostDTOs){
-			Date dateRange2;
-			if(bedCostDTO.getDateRange2()!=null){
-				dateRange2 = (Date) bedCostDTO.getDateRange2();
-			}else{
-				dateRange2 = new Date(2013, 11, 24);
-			}
-				
-			valuesStr.append(",").append("(").append(bedId).append(",").append(bedCostDTO.getDateRange1()).append(",").
-			append(dateRange2).append(",").append(bedCostDTO.getBedCost()).append(")");
+		for(BedCostDTO bedCostDTO: bedCostDTOs){				
+			valuesStr.append(",").append("(").append(bedId).append(",").append(bedCostDTO.getDateRange1Str()).append(",").
+			append(bedCostDTO.getDateRange1Str()).append(",").append(bedCostDTO.getBedCost()).append(")");
 		}
-		String insertQuery = valuesStr.toString().replaceFirst(",", " ");
+		
+		String insertQuery = valuesStr1.toString()+valuesStr.toString().replaceFirst(",", " ");
 		try{
-			oldJdbcTemplate.execute(insertQuery);			
+			
+			oldJdbcTemplate.update(insertQuery);
+			
 		}catch (Exception e) {
 			
 			throw new Exception(e.getMessage(), e);

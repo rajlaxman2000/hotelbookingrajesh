@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,8 +109,13 @@ public class ReadXMLFile {
 						if(availbleNodeNames.contains(paramName)){
 							if(paramName.equalsIgnoreCase("date")){
 								StringBuilder dateStringBuilder = new StringBuilder();
-								dateStringBuilder.append(val.substring(0,3)).append("-").append(val.substring(6,7)).append("-").append(val.substring(4,5));
+								//(yyyy-mm-dd)
+								//20140701
+								dateStringBuilder.append(val.substring(0,4)).append("-").append(val.substring(6)).append("-").append(val.substring(4,6));								
+								availableDTO.setDateStr(val);
 								availableDTO.setDate(Date.valueOf(dateStringBuilder.toString()));
+								
+								
 							}else if(paramName.equalsIgnoreCase("room")){	
 								availableDTO.setRoomName("room-"+val);
 							}else if(paramName.equalsIgnoreCase("bed")){	
@@ -214,6 +220,7 @@ public class ReadXMLFile {
     		String roomBedKey = dto.getRoomName()+"_"+dto.getBedName();
 			bedCostDTO = new BedCostDTO();
 			bedCostDTO.setDateRange1(dto.getDate());
+			bedCostDTO.setDateRange1Str(dto.getDateStr());
 			bedCostDTO.setBedCost(dto.getPrice());  
 			
 			if(bedCostsMap.containsKey(roomBedKey)){    			
