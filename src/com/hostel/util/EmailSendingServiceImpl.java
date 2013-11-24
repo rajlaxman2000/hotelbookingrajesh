@@ -1,4 +1,4 @@
-package com.hostel.mailservice;
+package com.hostel.util;
 
 import java.util.Properties;
 import com.hostel.model.MailDTO;

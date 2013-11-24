@@ -20,6 +20,6 @@ public interface RoomDAO {
 	
 	public final String updateRoomQuery="update room set room_name=:roomName, room_descriotion=roomDescription where room_id=:roomId";
 	
-	public final String insertRoomQuery="insert into room (room_name, room_descripton, hostel_id) vlaues (:roomName, :roomDescription,:hostel_id)";
+	public final String insertRoomQuery="insert into room (room_name, hostel_id) vlaues (:roomName,:hostel_id)";
 
 }

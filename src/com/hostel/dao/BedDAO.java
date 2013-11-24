@@ -22,6 +22,6 @@ public interface BedDAO {
 	
 	public final String updateBedQuery="update bed set bed_name=:bedName, bed_cost=:bedCost, bed_available=:bedAvailable where bed_id=:bedId";
 	
-	public final String insertBedQuery="insert into bed (bed_name, bed_cost, bed_availability, room_id) values (:bedName, :bedCost, :bedAvailable, :roomId)";
+	public final String insertBedQuery="insert into bed (bed_name, room_id) values (:bedName,:roomId)";
 
 }
