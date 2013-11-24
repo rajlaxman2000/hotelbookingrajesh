@@ -4,6 +4,8 @@ import com.hostel.model.CustomerDTO;
 
 public interface CustomerDAO {
 	
+	/*customer_id,first_name,last_name,email,cc_number,expiration_date,security_code,phone*/
+	
 	public CustomerDTO getCutomerDetailsById(int custId);
 	
 	/**
@@ -13,22 +15,21 @@ public interface CustomerDAO {
 	 * @param emailFaceBookTwitterId
 	 * @return
 	 */
-	public int searchCutomer(String emailFaceBookTwitterId);
+	public CustomerDTO searchCutomer(String email);
 	
 	public int insertCustomer(CustomerDTO customerDTO);
 	
 	
 	public final String getCustByIdQuery="select * from customer where customer_id=:customerId";
 	
+	//TODO : build complete query based on search items
 	public final String searchCustomerQuery="select customer_id from customer where  ";
 	
-	public final String insertQuery="";
+	//TODO : build complete parms directly 
+	public final String insertQuery="insert into ";
 	
-	/* 
-`customer_id, customer_name, cuttomer_age, customer_gender,
-  `customer_facebookId` varchar(45) DEFAULT NULL,
-  `customer_emailId` varchar(45) DEFAULT NULL,
-  `customer_twitterId` varchar(45) DEFAULT NULL,
-  `customer_address_id` bigint(20) DEFAULT NULL,
-	 */
+	///TODO :  build query complete based on parms given to be updated.
+	public final String updateQuery="update customer ";
+	
+
 }

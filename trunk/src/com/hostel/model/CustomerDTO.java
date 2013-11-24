@@ -2,15 +2,15 @@ package com.hostel.model;
 
 public class CustomerDTO {
 	
-	private int custId;
-	private String custName;
-	private String custMailId;
-	private String custFaceBookId;
-	private String custTwitterId;
-	private int age;
-	private char gender;
-	private AddressDTO addressDTO;
 	
+	private int custId;
+	private String firstName;
+	private String lastName;
+	private String emailId;
+	private String ccNumber;
+	private String expDate;
+	private	String SecurityCodegender;
+	private String phone;
 	/**
 	 * @return the custId
 	 */
@@ -24,89 +24,88 @@ public class CustomerDTO {
 		this.custId = custId;
 	}
 	/**
-	 * @return the custName
+	 * @return the firstName
 	 */
-	public String getCustName() {
-		return custName;
+	public String getFirstName() {
+		return firstName;
 	}
 	/**
-	 * @param custName the custName to set
+	 * @param firstName the firstName to set
 	 */
-	public void setCustName(String custName) {
-		this.custName = custName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	/**
-	 * @return the custMailId
+	 * @return the lastName
 	 */
-	public String getCustMailId() {
-		return custMailId;
+	public String getLastName() {
+		return lastName;
 	}
 	/**
-	 * @param custMailId the custMailId to set
+	 * @param lastName the lastName to set
 	 */
-	public void setCustMailId(String custMailId) {
-		this.custMailId = custMailId;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	/**
-	 * @return the custFaceBookId
+	 * @return the emailId
 	 */
-	public String getCustFaceBookId() {
-		return custFaceBookId;
+	public String getEmailId() {
+		return emailId;
 	}
 	/**
-	 * @param custFaceBookId the custFaceBookId to set
+	 * @param emailId the emailId to set
 	 */
-	public void setCustFaceBookId(String custFaceBookId) {
-		this.custFaceBookId = custFaceBookId;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	/**
-	 * @return the custTwitterId
+	 * @return the ccNumber
 	 */
-	public String getCustTwitterId() {
-		return custTwitterId;
+	public String getCcNumber() {
+		return ccNumber;
 	}
 	/**
-	 * @param custTwitterId the custTwitterId to set
+	 * @param ccNumber the ccNumber to set
 	 */
-	public void setCustTwitterId(String custTwitterId) {
-		this.custTwitterId = custTwitterId;
+	public void setCcNumber(String ccNumber) {
+		this.ccNumber = ccNumber;
 	}
 	/**
-	 * @return the age
+	 * @return the expDate
 	 */
-	public int getAge() {
-		return age;
+	public String getExpDate() {
+		return expDate;
 	}
 	/**
-	 * @param age the age to set
+	 * @param expDate the expDate to set
 	 */
-	public void setAge(int age) {
-		this.age = age;
+	public void setExpDate(String expDate) {
+		this.expDate = expDate;
 	}
 	/**
-	 * @return the gender
+	 * @return the securityCodegender
 	 */
-	public char getGender() {
-		return gender;
+	public String getSecurityCodegender() {
+		return SecurityCodegender;
 	}
 	/**
-	 * @param gender the gender to set
+	 * @param securityCodegender the securityCodegender to set
 	 */
-	public void setGender(char gender) {
-		this.gender = gender;
+	public void setSecurityCodegender(String securityCodegender) {
+		SecurityCodegender = securityCodegender;
 	}
 	/**
-	 * @return the addressDTO
+	 * @return the phone
 	 */
-	public AddressDTO getAddressDTO() {
-		return addressDTO;
+	public String getPhone() {
+		return phone;
 	}
 	/**
-	 * @param addressDTO the addressDTO to set
+	 * @param phone the phone to set
 	 */
-	public void setAddressDTO(AddressDTO addressDTO) {
-		this.addressDTO = addressDTO;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
-
 }

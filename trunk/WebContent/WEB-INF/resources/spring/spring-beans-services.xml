@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="xmlupload.service" class="com.hostel.service.impl.XmlUploadServiceImpl">
+		<property name="hostelService" ref="hostel.service"/>	
+	</bean>
+	
+	<bean id="hostel.service" class="com.hostel.service.impl.HostelServiceImpl">     	
+     	<property name="hostelDAO" ref="hostel.dao"/>
+     	<property name="roomService" ref="room.service"/>
+     </bean>
+      
+     <bean id="room.service" class="com.hostel.service.impl.RoomServiceImpl">
+     	<property name="bedService" ref="bed.service"/>    	
+     	<property name="roomDAO" ref="room.dao"/>     	
+     	<property name="bedDAO" ref="bed.dao"/>
+     </bean>
+    
+     <bean id="bed.service" class="com.hostel.service.impl.BedServiceImpl">
+     	<property name="bedDAO" ref="bed.dao"/>
+     	<property name="bedCostDAO" ref="bedCost.dao"/>
+     </bean>
+     
+</beans>
+
+

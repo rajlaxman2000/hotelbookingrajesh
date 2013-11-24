@@ -8,8 +8,8 @@ public interface RoomService {
 	
 	public List<RoomDTO> getRooms(int hostelId) throws Exception;
 	
-	public RoomDTO getRoomDetails(int roomId);
+	public RoomDTO getRoomDetails(int roomId) throws Exception;
 	
-	public boolean insertUpdateRoom(RoomDTO roomDTO);
+	public int insertUpdateRoom(RoomDTO roomDTO, int hostelId) throws Exception;
 
 }

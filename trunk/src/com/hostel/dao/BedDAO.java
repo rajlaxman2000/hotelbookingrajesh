@@ -8,11 +8,11 @@ public interface BedDAO {
 	
 	public List<BedDTO> getBedsByRoomId(int roomId) throws Exception;
 	
-	public BedDTO getBedDetailsByBedId(int bedId);
+	public BedDTO getBedDetailsByBedId(int bedId) throws Exception;
 	
-	public boolean updateBed(BedDTO bedDTO);
+	public int updateBed(BedDTO bedDTO) throws Exception;
 	
-	public boolean insertBed(BedDTO bedDTO);
+	public int insertBed(BedDTO bedDTO, int roomId) throws Exception;
 	
 	/*Put bed cost default value as 0 and bedAvailablity as Y by default
 	 * So while iserting if we don't pass means tru nut u can also say no fo rthe availablity */

@@ -1,15 +1,30 @@
 package com.hostel.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class BedCostDTO {
 	
+	private int bedId;
 	private Date dateRange1;
 	private Date dateRange2;
 	private Date dateRange1Str;
 	private Date dateRange2Str;
 	private float bedCost;
 	
+	
+	
+	/**
+	 * @return the bedId
+	 */
+	public int getBedId() {
+		return bedId;
+	}
+	/**
+	 * @param bedId the bedId to set
+	 */
+	public void setBedId(int bedId) {
+		this.bedId = bedId;
+	}
 	/**
 	 * @return the dateRange1Str
 	 */

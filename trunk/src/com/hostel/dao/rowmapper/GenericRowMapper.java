@@ -1,5 +1,5 @@
 
-package com.hostel.dao.impl;
+package com.hostel.dao.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

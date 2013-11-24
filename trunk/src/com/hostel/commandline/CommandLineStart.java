@@ -4,18 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import org.springframework.expression.spel.generated.SpringExpressionsParser.startNode_return;
-
 import com.hostel.util.AllCmdMaps;
 
-//import java.util.Scanner;
-
-//import org.springframework.context.support.GenericXmlApplicationContext;
+import java.util.Scanner;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 public class CommandLineStart {
 	
 	public static void main (String[] args){
+		
+		GenericXmlApplicationContext context = new GenericXmlApplicationContext();		
+		context.load("classpath:spring-beans-dao.xml");
+		context.load("classpath:spring-beans-command.xml");
+		context.load("classpath:spring-beans-services.xml");
+		context.refresh();
+		
+		
 		
 		/*
 		GenericXmlApplicationContext context = new GenericXmlApplicationContext();
@@ -37,7 +41,11 @@ public class CommandLineStart {
 		        
 			}while(true);
 			*/
-		CommandProcessor commandProcessor= new CommandProcessor();
+		
+		CommandProcessor commandProcessor= (CommandProcessor)context.getBean("command.processor");
+		
+		
+		
 		/*String cmd1 = new String("search --start_date adad --end_date 20130702 --beds 7");		
 		String cmd2 = new String("book add --search_id 1234 --user_id 678");	
 		*/
