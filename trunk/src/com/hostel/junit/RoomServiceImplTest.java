@@ -34,12 +34,6 @@ public class RoomServiceImplTest extends TestCase {
 		bedServiceMock = Mockito.mock(BedService.class);
 		roomDTO = Mockito.mock(RoomDTO.class);
 
-		System.out.println(roomServiceImpl);
-		System.out.println(roomDAOmock);
-		System.out.println(bedDAOmock);
-		System.out.println(bedServiceMock);
-		System.out.println(roomDTO);
-
 		roomServiceImpl.setBedDAO(bedDAOmock);
 		roomServiceImpl.setBedService(bedServiceMock);
 		roomServiceImpl.setRoomDAO(roomDAOmock);
@@ -53,16 +47,16 @@ public class RoomServiceImplTest extends TestCase {
 	}
 
 	public void testInsertUpdateRoom() throws Exception {
-		System.out.println("method1 test");
+
 		int result = roomServiceImpl.insertUpdateRoom(roomDTO, 1);
-		System.out.println(result);
+
 		assertEquals(1, result);
 	}
 
 	public void testGetRooms() throws Exception {
-		System.out.println("method2 test");
+
 		List<RoomDTO> roomDTOsResult = roomServiceImpl.getRooms(1);
-		System.out.println(roomDTOsResult);
+
 		assertEquals("myroom", roomDTOsResult.get(0).getRoomName());
 	}
 

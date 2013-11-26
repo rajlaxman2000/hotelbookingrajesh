@@ -24,8 +24,8 @@ public class HostelDAOImpl extends GenericDAO implements HostelDAO{
 	public List<HostelDTO> getAllHostelsByCity(String cityName) throws Exception {
 		List<HostelDTO> hostels = null;
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
-		
-		String whereClause = new String(" where hostel_city like '%:cityName%'");
+		paramMap.put("cityName", cityName);
+		String whereClause = new String(" where hostel_city like '%"+cityName+"%'");
 		
 		try {
 			hostels = jdbcTemplate.query(getHostelsQuery+whereClause, paramMap, hostelRowMapper);

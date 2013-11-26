@@ -50,7 +50,7 @@ public class SearchServiceImpl implements SearchService {
 			List<BedCostDTO> tmpBedCostDTOs = new ArrayList<BedCostDTO>();
 			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();  
 			for(int i=0; i<actualBedCosts.size();i++){			
-				if(initialBedId!=actualBedCosts.get(i).getBedId()){				
+				if(initialBedId!=actualBedCosts.get(i).getBedId() || i == (actualBedCosts.size()-1) ){				
 					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
 					tmpBedCostDTOs.clear();
 					tmpBedCostDTOs.add(actualBedCosts.get(i));

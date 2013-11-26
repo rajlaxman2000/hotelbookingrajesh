@@ -19,7 +19,7 @@ public class ReadXMLFileTest extends TestCase {
 	HostelDTO hostelDTO;
 
 	public void setUp() throws Exception {
-		System.out.println("setup");
+		
 		params = new HashMap<String, String>();
 		params.put("name", "my_hostel");
 		params.put("cancellation_deadline", "15");
@@ -32,13 +32,13 @@ public class ReadXMLFileTest extends TestCase {
 	}
 
 	public void testBuildHostelDTO() {
-		System.out.println("method 1");
+	
 		hostelDTO = ReadXMLFile.buildHostelDTO(params, availDTOs);
 		assertEquals("my_hostel", hostelDTO.getHostelName());
 	}
 
 	public void testBuildRooms() {
-		System.out.println("method 1");
+	
 		List<RoomDTO> roomDTOsResult = ReadXMLFile.buildRooms(availDTOs);
 		assertEquals("my_room", roomDTOsResult.get(0).getRoomName());
 

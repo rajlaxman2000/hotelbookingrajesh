@@ -27,14 +27,12 @@ public class BedServiceImplTest extends TestCase {
 	List<BedDTO> bedList = new ArrayList<BedDTO>();
 
 	public void setUp() throws Exception {
-		System.out.println("setup called");
 
 		bedCostDTO.setBedId(5);
 		bedCostDTO.setDateRange1(date1);
 		bedCostDTO.setDateRange2(date2);
 
 		bedCostList.add(bedCostDTO);
-		System.out.println(bedCostDTO.getBedId());
 
 		bedServiceImpl = new BedServiceImpl();
 		bedCostDAO = Mockito.mock(BedCostDAO.class);
@@ -59,11 +57,9 @@ public class BedServiceImplTest extends TestCase {
 	}
 
 	public void testGetBedCostsByHostelIdDateRanges() throws Exception {
-		System.out.println("test called");
 		List<BedCostDTO> result = bedServiceImpl
 				.getBedCostsByHostelIdDateRanges(bedCostDTO.getBedId(),
 						bedCostDTO.getDateRange1(), bedCostDTO.getDateRange2());
-		System.out.println("result::" + result);
 		assertEquals(5, result.get(0).getBedId());
 
 	}
@@ -71,7 +67,7 @@ public class BedServiceImplTest extends TestCase {
 	public void testInsertUpdateBed() throws Exception {
 
 		int result = bedServiceImpl.insertUpdateBed(bedDTO, 1);
-		System.out.println("insert update test");
+
 		assertEquals(5, result);
 	}
 

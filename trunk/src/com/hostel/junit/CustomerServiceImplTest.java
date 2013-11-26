@@ -17,7 +17,6 @@ public class CustomerServiceImplTest extends TestCase {
 
 	@Override
 	public void setUp() throws Exception {
-		System.out.println("setup");
 
 		customerDTO.setFirstName("gouse");
 		customerDTO.setEmailId("gmohiddin@gmail.com");
@@ -46,8 +45,6 @@ public class CustomerServiceImplTest extends TestCase {
 		List<CustomerDTO> customerDTOsResult = customerServiceImpl
 				.searchCustomerByCriteria(customerDTO.getFirstName(),
 						customerDTO.getLastName(), customerDTO.getEmailId());
-		System.out.println(customerDTOsResult);
-		// assertEquals("gouse", res.get(0).getFirstName());
 
 	}
 

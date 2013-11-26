@@ -30,7 +30,7 @@ public abstract class AppUtil {
     	  put("admin_occupancy",new ArrayList<String>(Arrays.asList("start_date","end_date")));
     	}};
     
-    public static final String numbRegEx="[0-9]";
+    public static final String numbRegEx="\\d+";
     
     /**
      * 
@@ -49,7 +49,7 @@ public abstract class AppUtil {
     public static boolean checkValidDateStr(String str){
 		boolean result = false;
 		int year=0,month=0,day=0;
-		if(str.trim().length()==8 && str.matches(AppUtil.numbRegEx) ){
+		if(str.trim().length()==8 && str.matches(AppUtil.numbRegEx) ){			
 			year = Integer.valueOf(str.substring(0,4));
 			month = Integer.valueOf(str.substring(6));
 			day=Integer.valueOf(str.substring(4,6));
