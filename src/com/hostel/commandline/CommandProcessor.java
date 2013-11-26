@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.hostel.model.BedCostDTO;
 import com.hostel.model.CustomerDTO;
 import com.hostel.service.CustomerService;
 import com.hostel.service.HostelService;
@@ -39,7 +40,8 @@ public class CommandProcessor {
 	public void searchService(CommandDTO commandDTO){
 		String cityName = null,startDateStr=null,endDateStr=null;
 		Date startDate=null, endDate=null;		
-		int noOFBeds=0;
+		int noOFBeds=0; 
+		List<BedCostDTO> availableBeds =null;
 		
 		if(commandDTO.getCmdParams().get("city")!=null){
 			cityName = commandDTO.getCmdParams().get("city");
@@ -57,6 +59,22 @@ public class CommandProcessor {
 		}
 		System.err.println("Proceeding for search with below valid criteria");
 		System.out.println("city name : " +cityName+",start date : "+ startDate+ ", End Date : "+ endDate+", beds : "+noOFBeds);
+		
+		try {			
+			availableBeds = searchService.searchByCriteria(cityName, startDate, endDate, noOFBeds);
+			if(availableBeds!=null && availableBeds.size()>0){
+				for(BedCostDTO bedCostDto: availableBeds ){
+					System.out.println("Bed serach id:: "+bedCostDto.getBedId() +"-- StartDate:"+bedCostDto.getDateRange1()+" to -- EndDate:"+bedCostDto.getDateRange2()+" :: cost ::"+bedCostDto.getBedCost()+"$");
+					System.out.println( "--------------------------------------");
+				}
+			}else{
+				System.out.println("There are no beds availabel for the given serach criteria, please try with new criteria");
+			}	
+		} catch (Exception e) {
+			System.out.println("There is a problem to fetch the data by given criteria, please try again later");
+			e.printStackTrace();
+		}
+		
 		
 	}
 	

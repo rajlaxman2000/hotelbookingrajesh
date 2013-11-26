@@ -15,21 +15,21 @@ public class CustomerRowMapper extends GenericRowMapper<CustomerDTO> {
 		CustomerDTO dto = new CustomerDTO();
 		///*customer columns : first_name last_name email , cc_number expiration_date security_code phone
 		
-		if(rs.getInt("customer_id")!=0)
+		if(this.columns.contains("customer_id"))
 			dto.setCustId(rs.getInt("customer_id"));
-		if(rs.getString("first_name")!=null)
+		if(this.columns.contains("first_name"))
 			dto.setFirstName(rs.getString("first_name"));
-		if(rs.getString("last_name")!=null)
+		if(this.columns.contains("last_name"))
 			dto.setLastName(rs.getString("last_name"));
-		if(rs.getString("email")!=null)
+		if(this.columns.contains("email"))
 			dto.setEmailId(rs.getString("email"));
-		if(rs.getString("cc_number")!=null)
+		if(this.columns.contains("cc_number"))
 			dto.setCcNumber(rs.getString("cc_number"));
-		if(rs.getString("expiration_date")!=null)
+		if(this.columns.contains("expiration_date"))
 			dto.setExpDate(rs.getString("expiration_date"));
-		if(rs.getString("security_code")!=null)
+		if(this.columns.contains("security_code"))
 			dto.setSecurityCode(rs.getString("security_code"));
-		if(rs.getString("phone")!=null)
+		if(this.columns.contains("phone"))
 			dto.setPhone(rs.getString("phone"));
 		
 				

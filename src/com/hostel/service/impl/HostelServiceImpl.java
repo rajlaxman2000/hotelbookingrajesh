@@ -28,22 +28,12 @@ public class HostelServiceImpl implements HostelService{
 	}
 	
 
-	/**
-	 * @return the roomService
-	 */
-	public RoomService getRoomService() {
-		return roomService;
+	@Override
+	public List<HostelDTO> searchHostelsByCity(String cityName) throws Exception {
+		List<HostelDTO> hostels;
+		hostels = hostelDAO.getAllHostelsByCity(cityName);
+		return (hostels!=null && hostels.size()>0)?hostels:null;
 	}
-
-
-	/**
-	 * @param roomService the roomService to set
-	 */
-	public void setRoomService(RoomService roomService) {
-		this.roomService = roomService;
-	}
-
-
 	
 	
 	@Override
@@ -57,12 +47,24 @@ public class HostelServiceImpl implements HostelService{
 		return hostels;
 	}
 	
-	
-
 	@Override
 	public HostelDTO getHostelDetails(int hostelId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * @return the roomService
+	 */
+	public RoomService getRoomService() {
+		return roomService;
+	}
+
+	/**
+	 * @param roomService the roomService to set
+	 */
+	public void setRoomService(RoomService roomService) {
+		this.roomService = roomService;
 	}
 
 	/**
@@ -80,11 +82,5 @@ public class HostelServiceImpl implements HostelService{
 	}
 
 
-	@Override
-	public List<HostelDTO> searchHostelsByCity(String cityName)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

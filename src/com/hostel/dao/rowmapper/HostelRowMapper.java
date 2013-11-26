@@ -17,7 +17,7 @@ public class HostelRowMapper extends GenericRowMapper<HostelDTO> {
 		dto.setHostelId(rs.getInt("hostel_id"));
 		dto.setHostelName(rs.getString("hostel_name"));
 		//This logic sperates that either we will just pull out id and name to use for light use or will pull complete data for heavy use 
-		if(rs.getString("hostel_street")!=null){
+		if(this.columns.contains("hostel_city")){			
 			dto.setAdrStreet(rs.getString("hostel_street"));
 			dto.setAdrCity(rs.getString("hostel_city"));
 			dto.setAdrState(rs.getString("hostel_state"));

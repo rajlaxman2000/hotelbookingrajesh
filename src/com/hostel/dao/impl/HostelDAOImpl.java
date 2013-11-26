@@ -18,6 +18,24 @@ public class HostelDAOImpl extends GenericDAO implements HostelDAO{
 
 	private HostelRowMapper hostelRowMapper;
 	
+	
+
+	@Override
+	public List<HostelDTO> getAllHostelsByCity(String cityName) throws Exception {
+		List<HostelDTO> hostels = null;
+		Map<String, Object> paramMap = new HashMap<String, Object>(1);
+		
+		String whereClause = new String(" where hostel_city like '%:cityName%'");
+		
+		try {
+			hostels = jdbcTemplate.query(getHostelsQuery+whereClause, paramMap, hostelRowMapper);
+		} catch(DataAccessException e) {
+			throw new Exception(e.getMessage(), e);
+		}
+
+		return hostels;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see com.hostel.dao.HostelDAO#getAllHostels()
@@ -96,6 +114,7 @@ public class HostelDAOImpl extends GenericDAO implements HostelDAO{
 		map.put("cancellationFeePercant", hostelDTO.getCancellationFeePercant());	
 		return map;
 	}
+
 	
 	
 

@@ -22,11 +22,22 @@
      	<property name="bedCostDAO" ref="bedCost.dao"/>
      </bean>
      
-      <bean id="search.service" class="com.hostel.service.impl.SearchServiceImpl">     	
+   
+ 
+     <bean id="search.service" class="com.hostel.service.impl.SearchServiceImpl">  
+    
+    		 <property name="hostelService" ref="hostel.service"/>
+         	<property name="bedService" ref="bed.service"/> 
+         	<property name="roomService" ref="room.service"/>
+         	<property name="orderService" ref="order.service"/>
      </bean>
      
       <bean id="customer.service" class="com.hostel.service.impl.CustomerServiceImpl">
      	<property name="customerDAO" ref="customer.dao"/>     	
+     </bean>
+     
+     <bean id="order.service" class="com.hostel.service.impl.OrderServiceImpl">
+     	<property name="orderDAO" ref="order.dao"/>     	
      </bean>
      
 </beans>
