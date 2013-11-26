@@ -8,6 +8,8 @@ public interface HostelService {
 	
 	public List<HostelDTO> getHostels() throws Exception;
 	
+	public List<HostelDTO> searchHostelsByCity(String cityName) throws Exception;
+	
 	public HostelDTO getHostelDetails(int hostelId) throws Exception;
 	
 	public int insertHostel(HostelDTO hostelDTO) throws Exception;

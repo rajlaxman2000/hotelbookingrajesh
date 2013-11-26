@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import com.hostel.util.AllCmdMaps;
+import com.hostel.util.AppUtil;
 
 import java.util.Scanner;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -87,22 +87,26 @@ public class CommandLineStart {
 		List<String> actualParamsList;
 		
 		if(commandDTO.getCmdName().equalsIgnoreCase("search") ){
-			result = checkParmsFineness(commandDTO.getCmdParams(),AllCmdMaps.searchSearchMap.get("search"));			
+			if(commandDTO.getCmdParams().size()>0){
+				result = checkParmsFineness(commandDTO.getCmdParams(),AppUtil.searchSearchMap.get("search"));
+			}else{
+				result = true;
+			}	
 		}
 		else if(commandDTO.getCmdName().equalsIgnoreCase("book") && (commandDTO.getSubCmdName().equalsIgnoreCase("add") || 
 				commandDTO.getSubCmdName().equalsIgnoreCase("cancel") || commandDTO.getSubCmdName().equalsIgnoreCase("view")) ){
 			
-			actualParamsList = AllCmdMaps.bookCmdMap.get("book_"+commandDTO.getSubCmdName());
+			actualParamsList = AppUtil.bookCmdMap.get("book_"+commandDTO.getSubCmdName());
 			result = checkParmsFineness(commandDTO.getCmdParams(),actualParamsList);			
 			
 		}else if(commandDTO.getCmdName().equalsIgnoreCase("user") && (commandDTO.getSubCmdName().equalsIgnoreCase("add") || 
-				commandDTO.getSubCmdName().equalsIgnoreCase("change") || commandDTO.getSubCmdName().equalsIgnoreCase("view")) ){
-			actualParamsList = AllCmdMaps.userCmdMap.get("user_"+commandDTO.getSubCmdName());
+				commandDTO.getSubCmdName().equalsIgnoreCase("change") || commandDTO.getSubCmdName().equalsIgnoreCase("edit")) ){
+			actualParamsList = AppUtil.userCmdMap.get("user_"+commandDTO.getSubCmdName());
 			result = checkParmsFineness(commandDTO.getCmdParams(),actualParamsList);
 			
 		}else if(commandDTO.getCmdName().equalsIgnoreCase("admin") && (commandDTO.getSubCmdName().equalsIgnoreCase("load") || 
 				commandDTO.getSubCmdName().equalsIgnoreCase("revenue") || commandDTO.getSubCmdName().equalsIgnoreCase("occupancy")) ){
-			actualParamsList = AllCmdMaps.adminCmddMap.get("admin_"+commandDTO.getSubCmdName());
+			actualParamsList = AppUtil.adminCmddMap.get("admin_"+commandDTO.getSubCmdName());
 			result = checkParmsFineness(commandDTO.getCmdParams(),actualParamsList);
 		}
 		return result;

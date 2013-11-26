@@ -17,12 +17,13 @@ public class HostelServiceImpl implements HostelService{
 	@Override
 	public int insertHostel(HostelDTO hostelDTO) throws Exception {
 		int hostelId = hostelDAO.insertHostel(hostelDTO);
+		
 		hostelDTO.setHostelId(hostelId);
 		int roomId;
 		
 		for(RoomDTO room : hostelDTO.getRooms()){
 			roomId = roomService.insertUpdateRoom(room, hostelId);			
-		}	
+		}
 		return hostelId;
 	}
 	
@@ -76,6 +77,14 @@ public class HostelServiceImpl implements HostelService{
 	 */
 	public void setHostelDAO(HostelDAO hostelDAO) {
 		this.hostelDAO = hostelDAO;
+	}
+
+
+	@Override
+	public List<HostelDTO> searchHostelsByCity(String cityName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

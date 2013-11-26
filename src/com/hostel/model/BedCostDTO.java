@@ -2,7 +2,7 @@ package com.hostel.model;
 
 import java.sql.Date;
 
-public class BedCostDTO {
+public class BedCostDTO implements Comparable<BedCostDTO> {
 	
 	private int bedId;
 	private Date dateRange1;
@@ -11,8 +11,57 @@ public class BedCostDTO {
 	private String dateRange2Str;
 	private float bedCost;
 	
+	//These will be used while searching
+	private String roomName;
+	private int hostelId;
+	private String hostelName;
+	
+	/**
+	 * Comparing by bed Ids
+	 */
+	@Override
+	public int compareTo(BedCostDTO o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
+	/**
+	 * @return the roomName
+	 */
+	public String getRoomName() {
+		return roomName;
+	}
+	/**
+	 * @param roomName the roomName to set
+	 */
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	/**
+	 * @return the hostelId
+	 */
+	public int getHostelId() {
+		return hostelId;
+	}
+	/**
+	 * @param hostelId the hostelId to set
+	 */
+	public void setHostelId(int hostelId) {
+		this.hostelId = hostelId;
+	}
+	/**
+	 * @return the hostelName
+	 */
+	public String getHostelName() {
+		return hostelName;
+	}
+	/**
+	 * @param hostelName the hostelName to set
+	 */
+	public void setHostelName(String hostelName) {
+		this.hostelName = hostelName;
+	}
 	/**
 	 * @return the bedId
 	 */
@@ -85,6 +134,7 @@ public class BedCostDTO {
 	public void setBedCost(float bedCost) {
 		this.bedCost = bedCost;
 	}
+	
 	
 	
 }

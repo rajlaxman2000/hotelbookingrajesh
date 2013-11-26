@@ -1,4 +1,6 @@
 package com.hostel.service.impl;
+import java.io.File;
+
 import com.hostel.model.BedCostDTO;
 import com.hostel.model.BedDTO;
 import com.hostel.model.HostelDTO;
@@ -18,8 +20,9 @@ public class XmlUploadServiceImpl implements XmlUploadService {
 	@Override
 	public String uploadXmlByPath(String fileNameWithPath) {
 		
-		String resultStr = null;		
-		if(!fileNameWithPath.isEmpty() && fileNameWithPath.contains(".XML")){
+		String resultStr = null;	
+		File f = new File(fileNameWithPath);
+		if(f.exists() && (fileNameWithPath.contains(".XML") || fileNameWithPath.contains(".xml"))){
 			fileNameWithPath.replace("\\","/");
 			HostelDTO hostelDTO= ReadXMLFile.uploadXML(fileNameWithPath);
 			
@@ -32,8 +35,6 @@ public class XmlUploadServiceImpl implements XmlUploadService {
 					e.printStackTrace();
 				}
 			}
-			//call service classes to insert hostel details into DB
-			
 			System.out.println("Hostel details ");
 			System.out.println("Hostel name:"+hostelDTO.getHostelName());
 			System.out.println("Hostel addd  street:"+hostelDTO.getAdrStreet());

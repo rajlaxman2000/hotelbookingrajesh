@@ -8,7 +8,8 @@
      
      <bean id="command.processor" class="com.hostel.commandline.CommandProcessor">     	
      	<property name="hostelService" ref="hostel.service"/>
-     	<property name="xmlUploadService" ref="xmlupload.service"/>
+     	<property name="searchService" ref="search.service"/>
+     	<property name="customerService" ref="customer.service"/>
      </bean>
      
          
