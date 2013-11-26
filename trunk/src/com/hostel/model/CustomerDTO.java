@@ -9,7 +9,7 @@ public class CustomerDTO {
 	private String emailId;
 	private String ccNumber;
 	private String expDate;
-	private	String SecurityCodegender;
+	private	String securityCode;
 	private String phone;
 	/**
 	 * @return the custId
@@ -86,20 +86,24 @@ public class CustomerDTO {
 	/**
 	 * @return the securityCodegender
 	 */
-	public String getSecurityCodegender() {
-		return SecurityCodegender;
-	}
-	/**
-	 * @param securityCodegender the securityCodegender to set
-	 */
-	public void setSecurityCodegender(String securityCodegender) {
-		SecurityCodegender = securityCodegender;
-	}
+
 	/**
 	 * @return the phone
 	 */
 	public String getPhone() {
 		return phone;
+	}
+	/**
+	 * @return the securityCode
+	 */
+	public String getSecurityCode() {
+		return securityCode;
+	}
+	/**
+	 * @param securityCode the securityCode to set
+	 */
+	public void setSecurityCode(String securityCode) {
+		this.securityCode = securityCode;
 	}
 	/**
 	 * @param phone the phone to set

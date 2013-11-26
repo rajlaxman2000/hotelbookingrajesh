@@ -1,5 +1,6 @@
 package com.hostel.dao.impl;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,7 @@ public class HostelDAOImpl extends GenericDAO implements HostelDAO{
 	@Override
 	public List<HostelDTO> getAllHostels() throws Exception {
 		List<HostelDTO> hostels = null;
-		Map<String, Object> paramMap = new HashMap<String, Object>(2);
-		//paramMap.put(ContactLogTable.ACCOUNT_NUM, loanId);
+		Map<String, Object> paramMap = new HashMap<String, Object>(2);		
 		try {
 			hostels = jdbcTemplate.query(getHostelsQuery, paramMap, hostelRowMapper);
 		} catch(DataAccessException e) {
@@ -93,7 +93,7 @@ public class HostelDAOImpl extends GenericDAO implements HostelDAO{
 		map.put("smoking", hostelDTO.getSmoking());
 		map.put("alcohol", hostelDTO.getAlcohol());
 		map.put("orderCancellationHoursLimit", hostelDTO.getOrderCancellationHoursLimit());
-		map.put("cancellationFeePercant", hostelDTO.getCancellationFeePercant());
+		map.put("cancellationFeePercant", hostelDTO.getCancellationFeePercant());	
 		return map;
 	}
 	
