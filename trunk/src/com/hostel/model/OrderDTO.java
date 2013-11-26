@@ -6,16 +6,58 @@ import java.util.List;
 public class OrderDTO {
 	
 	private int orderId;
-	private int customerId;
-	private int hostelId;
+	private int customerId;	
+	private int hostelId;	
 	private float orderCost;
 	private float orderCancelAmt;
 	private Date orderCancelDate;
 	private Date OrderPlcdDate;
 	private Date OrderStartDate;
-	private Date OrderEndDate;
+	private Date OrderEndDate;	
 	private List<OrderBedDTO> orderBeds;
 	
+	//for rendering 
+	private int noOfBeds;
+	private String hostelName;
+	private String customerName;
+	
+	
+	/**
+	 * @return the hostelName
+	 */
+	public String getHostelName() {
+		return hostelName;
+	}
+	/**
+	 * @param hostelName the hostelName to set
+	 */
+	public void setHostelName(String hostelName) {
+		this.hostelName = hostelName;
+	}
+	/**
+	 * @return the customerName
+	 */
+	public String getCustomerName() {
+		return customerName;
+	}
+	/**
+	 * @param customerName the customerName to set
+	 */
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	/**
+	 * @return the noOfBeds
+	 */
+	public int getNoOfBeds() {
+		return noOfBeds;
+	}
+	/**
+	 * @param noOfBeds the noOfBeds to set
+	 */
+	public void setNoOfBeds(int noOfBeds) {
+		this.noOfBeds = noOfBeds;
+	}
 	/**
 	 * @return the orderId
 	 */

@@ -26,10 +26,10 @@ public interface BedCostDAO {
 
 	public final String insertBedCostQuery="insert into bed_cost (bed_id, date_range1, date_range2, bed_cost) values (:bedId,:dateRange1,:dateRange2,:bedCost) ";
 	
-	public final String searchBedCostForSearchQuery = "select r.room_id,r.room_name,bc.bed_id, bc.date_range1,bc.date_range2,bc.bed_cost from bed_cost bc" +
-			"inner join bed b  on bc.bed_id = b.bed_id " +
+	public final String searchBedCostForSearchQuery = "select r.room_id,r.room_name,bc.bed_id, bc.date_range1,bc.date_range2,bc.bed_cost,h.hostel_id from bed_cost bc" +
+			" inner join bed b  on b.bed_id = bc.bed_id " +
 			" inner join room r on r.room_id = b.room_id " +
-			"inner join hostel h on h.hostel_id = r.hostel_id " +
-			" where h.hostel_id:=hostelId";
+			" inner join hostel h on h.hostel_id = r.hostel_id " +
+			" where h.hostel_id=:hostelId";
 	
 }

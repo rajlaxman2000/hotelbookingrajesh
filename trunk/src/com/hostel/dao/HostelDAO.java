@@ -8,6 +8,8 @@ public interface HostelDAO {
 	
 	public List<HostelDTO> getAllHostels() throws Exception;
 	
+	public List<HostelDTO> getAllHostelsByCity(String cityName) throws Exception;
+	
 	public HostelDTO getHostelDetailsById(int hostelId) throws Exception;
 	
 	public int insertHostel(HostelDTO hostelDTO) throws Exception;

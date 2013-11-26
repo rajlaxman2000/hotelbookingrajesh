@@ -6,7 +6,7 @@
 						   
 	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-	    <property name="url" value="jdbc:mysql://localhost:3306/hostellatest" />
+	    <property name="url" value="jdbc:mysql://localhost:3306/hostellatest1" />
 	    <property name="username" value="root" />
 	    <property name="password" value="" />
 	</bean>	
@@ -21,6 +21,7 @@
 	<bean id="bedRowMapper" class="com.hostel.dao.rowmapper.BedRowMapper" parent="genericRowMapper"/>
 	<bean id="bedCostRowMapper" class="com.hostel.dao.rowmapper.BedCostRowMapper" parent="genericRowMapper"/>
 	<bean id="customerRowMapper" class="com.hostel.dao.rowmapper.CustomerRowMapper" parent="genericRowMapper"/>
+	<bean id="orderRowMapper" class="com.hostel.dao.rowmapper.OrderRowMapper" parent="genericRowMapper"/>
 	
 	<!-- hostel.dao,room.dao,bed.dao,bedCost.dao -->
 	<bean id="hostel.dao" class="com.hostel.dao.impl.HostelDAOImpl" parent="genericDAO" scope="prototype">     	
@@ -38,9 +39,16 @@
      <bean id="bedCost.dao" class="com.hostel.dao.impl.BedCostDAOImpl" parent="genericDAO" scope="prototype">     	
      	<property name="bedCostRowMapper" ref="bedCostRowMapper"/>
      </bean>
+     
      <bean id="customer.dao" class="com.hostel.dao.impl.CustomerDAOImpl" parent="genericDAO" scope="prototype">     	
      	<property name="customerRowMapper" ref="customerRowMapper"/>
      </bean>
+     
+     <bean id="order.dao" class="com.hostel.dao.impl.OrderDAOImpl" parent="genericDAO" scope="prototype">     	
+     	<property name="orderRowMapper" ref="orderRowMapper"/>
+     </bean>
+     
+     
      
      
 </beans>
