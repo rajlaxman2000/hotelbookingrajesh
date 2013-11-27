@@ -10,14 +10,16 @@
     	 <property name="xmlUploadService" ref="xmlupload.service"/>
      	<property name="hostelService" ref="hostel.service"/>
      	<property name="searchService" ref="search.service"/>
-     	<property name="customerService" ref="customer.service"/>
+     	<property name="customerService" ref="customer.service"/>     	
+     	<property name="orderService" ref="order.service"/>
+     	
      </bean>
      
-         
+      <!--    
      <bean id="room.action" class="com.hostel.action.RoomAction">     	
      	<property name="roomService" ref="room.service"/>
      </bean>
-      
+       -->
       
      
 </beans>

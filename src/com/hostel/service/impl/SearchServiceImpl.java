@@ -21,9 +21,6 @@ public class SearchServiceImpl implements SearchService {
 	BedService bedService;
 	OrderService orderService;
 	
-	
-	
-	
 	@Override
 	public List<BedCostDTO> searchByCriteria(String cityName, Date startDate, Date endDate, int noOfBeds) throws Exception {
 		List<BedCostDTO> availbleBedCosts= new ArrayList<BedCostDTO>();
@@ -50,7 +47,10 @@ public class SearchServiceImpl implements SearchService {
 			List<BedCostDTO> tmpBedCostDTOs = new ArrayList<BedCostDTO>();
 			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();  
 			for(int i=0; i<actualBedCosts.size();i++){			
-				if(initialBedId!=actualBedCosts.get(i).getBedId() || i == (actualBedCosts.size()-1) ){				
+				if(initialBedId!=actualBedCosts.get(i).getBedId() || i == (actualBedCosts.size()-1) ){	
+					if(i == (actualBedCosts.size()-1)){
+						tmpBedCostDTOs.add(actualBedCosts.get(i));
+					}
 					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
 					tmpBedCostDTOs.clear();
 					tmpBedCostDTOs.add(actualBedCosts.get(i));
@@ -66,13 +66,21 @@ public class SearchServiceImpl implements SearchService {
 					List<BedCostDTO> dtos = entry.getValue();
 					//Check if start & end date empty the we need to take bed DateRanges as startDate and end date
 					if(startDate == null & endDate==null ){
-						startDate = dtos.get(0).getDateRange1();
-						endDate =  dtos.get(dtos.size()-1).getDateRange2();
-					}
-					boolean result = CheckActualBedAvailability(dtos,startDate,endDate);
-					if(result){
-						availbleBedCosts.addAll(dtos);
-					}
+						//startDate = dtos.get(0).getDateRange1();
+						//endDate =  dtos.get(dtos.size()-1).getDateRange2();
+						//Logic hint: need to pass each date range of  bed and check there are any orders or not if not that range for that bed is avaibale 
+						for(BedCostDTO dto: dtos){
+							boolean result = CheckActualBedAvailabilityByBedDTO(dto,dto.getDateRange1(),dto.getDateRange2());
+							if(result){
+								availbleBedCosts.add(dto);
+							}
+						}
+					}else{
+						boolean result = CheckActualBedAvailability(dtos,startDate,endDate);
+						if(result){
+							availbleBedCosts.addAll(dtos);
+						}
+					}	
 				}
 			}	
 		}	
@@ -80,6 +88,16 @@ public class SearchServiceImpl implements SearchService {
 		return (availbleBedCosts!=null && availbleBedCosts.size()>0)?availbleBedCosts:null;
 	}
 	
+	public boolean CheckActualBedAvailabilityByBedDTO(BedCostDTO bedCostDTO, Date startDate, Date endDate) throws Exception {
+		
+		List<OrderDTO> orders  = orderService.getOrdersByHostelBedDateRange(bedCostDTO.getHostelId(), bedCostDTO.getBedId(), startDate, endDate);
+		boolean result=false;
+		if(orders==null || orders.size()==0)
+			result = true;
+		
+		return result;
+		
+	}
 	/*
 	 * IF tmpStartDate is small than startDate -1, equal 0, if tmpStartDate is bigger than startDate 1
 	 * The below logic will pull all the actual beds with in the given date range.
@@ -98,18 +116,7 @@ public class SearchServiceImpl implements SearchService {
 			minDate = (i>=0)?tmpStartDate:startDate;
 			tmpEndDate =bedCosts.get(bedCosts.size()-1).getDateRange2();
 			i =tmpEndDate.compareTo(endDate);
-			maxDate = (i>=0)?endDate:tmpEndDate;
-			/*
-			if(i>=0){
-				minDate = tmpStartDate;
-			}else{
-					minDate = startDate;
-			}
-			if(i>=0){
-				maxDate =endDate;
-			}else{
-				maxDate = tmpEndDate;
-			*/
+			maxDate = (i>=0)?endDate:tmpEndDate;			
 		}
 		
 		List<OrderDTO> orders  = orderService.getOrdersByHostelBedDateRange(bedCosts.get(0).getHostelId(), bedCosts.get(0).getBedId(), minDate, maxDate);
