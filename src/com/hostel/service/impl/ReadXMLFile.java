@@ -21,8 +21,8 @@ import com.hostel.model.RoomDTO;
  
 public class ReadXMLFile {
    
-   static List<AvailableDTO> mainAvailableDTOs;	
-   static Map<String, String> mainParams;	
+   public static List<AvailableDTO> mainAvailableDTOs;	
+   public static Map<String, String> mainParams;	
    static HostelDTO hostelDTO;
    
    

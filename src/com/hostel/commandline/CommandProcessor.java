@@ -101,6 +101,98 @@ public class CommandProcessor {
 		}*/
 		System.out.println();
 	}
+	public void searchService(CommandDTO commandDTO){
+		String cityName = null,startDateStr=null,endDateStr=null;
+		Date startDate=null, endDate=null;		
+		int noOFBeds=0; 
+		List<BedCostDTO> availableBeds =null;
+		
+		if(commandDTO.getCmdParams().get("city")!=null){
+			cityName = commandDTO.getCmdParams().get("city");
+			cityName.replaceAll("_", " ");
+		}
+		if(commandDTO.getCmdParams().get("start_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("start_date"))){
+			startDateStr = commandDTO.getCmdParams().get("start_date");	
+			startDate = AppUtil.getSqlDateByString(startDateStr);
+		}
+		if(commandDTO.getCmdParams().get("end_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("end_date"))){
+			endDateStr = commandDTO.getCmdParams().get("end_date");
+			endDate = AppUtil.getSqlDateByString(endDateStr);
+		}
+		if(commandDTO.getCmdParams().get("beds")!=null && commandDTO.getCmdParams().get("beds").trim().matches(AppUtil.numbRegEx)){
+			noOFBeds = Integer.valueOf(commandDTO.getCmdParams().get("beds")).intValue();
+		}
+		System.out.println("Proceeding for search with below valid criteria");
+		System.out.println("city name : " +cityName+",start date : "+ startDate+ ", End Date : "+ endDate+", beds : "+noOFBeds);
+		this.searchResultDTO = new SearchResultDTO();  
+		this.commandDTO = commandDTO;
+		try {			
+			availableBeds = searchService.searchByCriteria(cityName, startDate, endDate, noOFBeds);
+			if(availableBeds!=null && availableBeds.size()>0){
+				System.out.println( "-----------------------------------------------------------------------------------------------------------------");
+				Collections.sort(availableBeds);				
+				for(BedCostDTO bedCostDto: availableBeds ){
+					System.out.println("Bed serach id:: "+bedCostDto.getBedId() +"-- StartDate:"+bedCostDto.getDateRange1()+" to -- EndDate:"+bedCostDto.getDateRange2()+" :: cost ::"+bedCostDto.getBedCost()+"$");
+					System.out.println( "-----------------------------------------------------------------------------------------------------------------");					
+				}
+				 
+				searchResultDTO.setResultBedCosts(availableBeds);
+				searchResultDTO.setStartDate(startDate);
+				searchResultDTO.setEndDate(endDate);
+				searchResultDTO.setNoOfBeds(noOFBeds);
+				setSearchResultDTO(searchResultDTO);
+			}else{
+				System.out.println("There are no beds availabel for the given serach criteria, please try with new criteria");
+			}	
+		} catch (Exception e) {
+			System.out.println("There is a problem to fetch the data by given criteria, please try again later");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	public void adminOccupancy(CommandDTO commandDTO){
+		String cityName = null,startDateStr=null,endDateStr=null;
+		Date startDate=null, endDate=null;		
+		int noOFBeds=0;
+		if(commandDTO.getCmdParams().get("city")!=null){
+			cityName = commandDTO.getCmdParams().get("city");
+			cityName.replaceAll("_", " ");
+		}
+		if(commandDTO.getCmdParams().get("start_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("start_date"))){
+			startDateStr = commandDTO.getCmdParams().get("start_date");	
+			startDate = AppUtil.getSqlDateByString(startDateStr);
+		}
+		if(commandDTO.getCmdParams().get("end_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("end_date"))){
+			endDateStr = commandDTO.getCmdParams().get("end_date");
+			endDate = AppUtil.getSqlDateByString(endDateStr);
+		}
+		System.out.println("Proceeding to get occupanacy details");
+		System.out.println("city name : " +cityName+",start date : "+ startDate+ ", End Date : "+ endDate+", beds : "+noOFBeds);		
+		
+		try {			
+			List<BedCostDTO> occupiedBeds = searchService.searchByCriteria(cityName, startDate, endDate, noOFBeds);
+			if(occupiedBeds!=null && occupiedBeds.size()>0){
+				System.out.println( "-----------------------------------------------------------------------------------------------------------------");
+				Collections.sort(occupiedBeds);				
+				for(BedCostDTO bedCostDto: occupiedBeds ){
+					System.out.println("Bed id :"+bedCostDto.getBedId() +"-- StartDate:"+bedCostDto.getDateRange1()+" to -- EndDate:"+bedCostDto.getDateRange2()+" :: cost ::"+bedCostDto.getBedCost()+"$");
+					System.out.println( "-----------------------------------------------------------------------------------------------------------------");					
+				}
+			}else{
+				System.out.println("There are no beds occupied the given criteria, please try with new criteria");
+			}	
+		} catch (Exception e) {
+			System.out.println("There is a problem to fetch the occupanacy details, please try again later");
+			e.printStackTrace();
+		}
+	
+		
+		System.out.println("I am in admin revenue section and good to go for servie class");	
+	}
+	
 	
 	public void adminRevenue(CommandDTO commandDTO){
 		
@@ -127,11 +219,7 @@ public class CommandProcessor {
 			
 		System.out.println("I am in admin revenue section and good to go for servie class");	
 	}
-	
-	
-	public void adminOccupancy(CommandDTO commandDTO){
-		System.out.println("I am in admin revenue section and good to go for servie class");	
-	}
+
 	public void bookCancelMethod(CommandDTO commandDTO){
 		//order_id can_before_hrs
 		int orderId, canHrs=0;		
@@ -288,55 +376,6 @@ public class CommandProcessor {
 	}
 	
 		
-	public void searchService(CommandDTO commandDTO){
-		String cityName = null,startDateStr=null,endDateStr=null;
-		Date startDate=null, endDate=null;		
-		int noOFBeds=0; 
-		List<BedCostDTO> availableBeds =null;
-		
-		if(commandDTO.getCmdParams().get("city")!=null){
-			cityName = commandDTO.getCmdParams().get("city");
-			cityName.replaceAll("_", " ");
-		}
-		if(commandDTO.getCmdParams().get("start_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("start_date"))){
-			startDateStr = commandDTO.getCmdParams().get("start_date");	
-			startDate = AppUtil.getSqlDateByString(startDateStr);
-		}
-		if(commandDTO.getCmdParams().get("end_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("end_date"))){
-			endDateStr = commandDTO.getCmdParams().get("end_date");
-			endDate = AppUtil.getSqlDateByString(endDateStr);
-		}
-		if(commandDTO.getCmdParams().get("beds")!=null && commandDTO.getCmdParams().get("beds").trim().matches(AppUtil.numbRegEx)){
-			noOFBeds = Integer.valueOf(commandDTO.getCmdParams().get("beds")).intValue();
-		}
-		System.err.println("Proceeding for search with below valid criteria");
-		System.out.println("city name : " +cityName+",start date : "+ startDate+ ", End Date : "+ endDate+", beds : "+noOFBeds);
-		this.searchResultDTO = new SearchResultDTO();  
-		this.commandDTO = commandDTO;
-		try {			
-			availableBeds = searchService.searchByCriteria(cityName, startDate, endDate, noOFBeds);
-			if(availableBeds!=null && availableBeds.size()>0){
-				System.out.println( "-----------------------------------------------------------------------------------------------------------------");
-				Collections.sort(availableBeds);				
-				for(BedCostDTO bedCostDto: availableBeds ){
-					System.out.println("Bed serach id:: "+bedCostDto.getBedId() +"-- StartDate:"+bedCostDto.getDateRange1()+" to -- EndDate:"+bedCostDto.getDateRange2()+" :: cost ::"+bedCostDto.getBedCost()+"$");
-					System.out.println( "-----------------------------------------------------------------------------------------------------------------");					
-				}
-				 
-				searchResultDTO.setResultBedCosts(availableBeds);
-				searchResultDTO.setStartDate(startDate);
-				searchResultDTO.setEndDate(endDate);
-				searchResultDTO.setNoOfBeds(noOFBeds);
-				setSearchResultDTO(searchResultDTO);
-			}else{
-				System.out.println("There are no beds availabel for the given serach criteria, please try with new criteria");
-			}	
-		} catch (Exception e) {
-			System.out.println("There is a problem to fetch the data by given criteria, please try again later");
-			e.printStackTrace();
-		}
-		
-	}
 	
 	/**
 	 * search, book_add, book_cancel, book_view, user_add, user_change, user_view, admin_load, admin_revenue, admin_occupancy
