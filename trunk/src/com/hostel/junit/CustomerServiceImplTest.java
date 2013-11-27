@@ -18,9 +18,9 @@ public class CustomerServiceImplTest extends TestCase {
 	@Override
 	public void setUp() throws Exception {
 
-		customerDTO.setFirstName("gouse");
-		customerDTO.setEmailId("gmohiddin@gmail.com");
-		customerDTO.setLastName("mohiddin");
+		customerDTO.setFirstName("geetha");
+		customerDTO.setEmailId("gsankineni@gmail.com");
+		customerDTO.setLastName("sankineni");
 		myParamList = new ArrayList<CustomerDTO>();
 		myParamList.add(customerDTO);
 
@@ -38,19 +38,30 @@ public class CustomerServiceImplTest extends TestCase {
 		Mockito.when(customerDAO.getCutomerDetailsById(1)).thenReturn(
 				customerDTO);
 
+		Mockito.when(customerDAO.editCustomer(customerDTO)).thenReturn(true);
+
+		Mockito.when(customerDAO.getCutomerDetailsById(1)).thenReturn(
+				customerDTO);
+
 	}
 
 	public void testSearchCustomerByCriteria() throws Exception {
 
 		List<CustomerDTO> customerDTOsResult = customerServiceImpl
-				.searchCustomerByCriteria(customerDTO.getFirstName(),
-						customerDTO.getLastName(), customerDTO.getEmailId());
-
+				.searchCustomerByCriteria("geetha", "sankineni",
+						"gsankineni@gmail.com");
+		assertEquals("geetha", customerDTOsResult.get(0).getFirstName());
 	}
 
 	public void testAddCustomer() throws Exception {
 		CustomerDTO result = customerServiceImpl.addCustomer(customerDTO);
-		assertEquals("gouse", result.getFirstName());
+		assertEquals("geetha", result.getFirstName());
 	}
 
+	public void testUpdateCustomer() throws Exception {
+		customerDTO.setCustId(1);
+		CustomerDTO customerDTOresult = customerServiceImpl
+				.updateCustomer(customerDTO);
+		assertEquals("geetha", customerDTOresult.getFirstName());
+	}
 }

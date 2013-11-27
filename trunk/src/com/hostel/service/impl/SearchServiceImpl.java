@@ -98,6 +98,63 @@ public class SearchServiceImpl implements SearchService {
 		return result;
 		
 	}
+	/**
+	 * This method will bring all the beds costs which are occupied this will be used by Admin to see the occupancy 
+	 * @param cityName
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws Exception
+	 */
+	public List<BedCostDTO> OccupiedBedCostDTOs(String cityName, Date startDate, Date endDate) throws Exception{
+		
+		List<BedCostDTO> occupiedBedCosts= new ArrayList<BedCostDTO>();
+		List<BedCostDTO> actualBedCosts = new ArrayList<BedCostDTO>();
+		List<HostelDTO> hostels;
+		if(cityName !=null && cityName.length()>0){
+			hostels = hostelService.searchHostelsByCity(cityName);
+		}else{
+			hostels = hostelService.getHostels();	
+		}
+		if(hostels != null && hostels.size()>0){
+			for(HostelDTO hostelDTO : hostels){
+				actualBedCosts = bedService.getBedCostsByHostelIdDateRanges(hostelDTO.getHostelId(), startDate, endDate);
+			}
+		}
+		
+		if(actualBedCosts!=null && actualBedCosts.size()>0){			
+			int initialBedId = actualBedCosts.get(0).getBedId();
+			List<BedCostDTO> tmpBedCostDTOs = new ArrayList<BedCostDTO>();
+			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();  
+			for(int i=0; i<actualBedCosts.size();i++){			
+				if(initialBedId!=actualBedCosts.get(i).getBedId() || i == (actualBedCosts.size()-1) ){	
+					if(i == (actualBedCosts.size()-1)){
+						tmpBedCostDTOs.add(actualBedCosts.get(i));
+					}
+					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+					tmpBedCostDTOs.clear();
+					tmpBedCostDTOs.add(actualBedCosts.get(i));
+					initialBedId = actualBedCosts.get(i).getBedId();
+				}else{
+					tmpBedCostDTOs.add(actualBedCosts.get(i));
+				}
+			}
+			for(Map.Entry<Integer, List<BedCostDTO>> entry: bedCostsMapById.entrySet() ){			
+				List<BedCostDTO> dtos = entry.getValue();
+				for(BedCostDTO dto: dtos){
+					boolean result = CheckActualBedAvailabilityByBedDTO(dto,dto.getDateRange1(),dto.getDateRange2());
+					if(!result){
+						occupiedBedCosts.add(dto);
+					}
+				}
+					
+			}	
+			
+			
+			
+		}	
+		return occupiedBedCosts;
+	}
 	/*
 	 * IF tmpStartDate is small than startDate -1, equal 0, if tmpStartDate is bigger than startDate 1
 	 * The below logic will pull all the actual beds with in the given date range.

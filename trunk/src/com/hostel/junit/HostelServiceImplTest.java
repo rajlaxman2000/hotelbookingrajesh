@@ -20,7 +20,7 @@ public class HostelServiceImplTest extends TestCase {
 	 * MockitoAnnotations.initMocks(this); }
 	 */
 	HostelServiceImpl hostelServiceImpl;
-	HostelDAO daomock;
+	HostelDAO hostelDaoMock;
 	HostelDTO hostelDTO = new HostelDTO();
 	RoomService roomService;
 
@@ -28,19 +28,23 @@ public class HostelServiceImplTest extends TestCase {
 		List<HostelDTO> myList = new ArrayList<HostelDTO>();
 
 		hostelDTO.setHostelId(4);
+		myList.add(hostelDTO);
 		hostelServiceImpl = new HostelServiceImpl();
 
-		daomock = Mockito.mock(HostelDAO.class);
-		hostelServiceImpl.setHostelDAO(daomock);
-
-		Mockito.when(daomock.insertHostel(hostelDTO)).thenReturn(
-				hostelDTO.getHostelId());
-		myList.add(hostelDTO);
-
-		Mockito.when(daomock.getAllHostels()).thenReturn(myList);
+		hostelDaoMock = Mockito.mock(HostelDAO.class);
 		roomService = Mockito.mock(RoomService.class);
 
+		hostelServiceImpl.setHostelDAO(hostelDaoMock);
 		hostelServiceImpl.setRoomService(roomService);
+
+		Mockito.when(hostelDaoMock.insertHostel(hostelDTO)).thenReturn(
+				hostelDTO.getHostelId());
+
+		Mockito.when(hostelDaoMock.getAllHostels()).thenReturn(myList);
+
+		Mockito.when(hostelDaoMock.getAllHostelsByCity("my_city")).thenReturn(
+				myList);
+
 		Mockito.when(
 				roomService.insertUpdateRoom(new RoomDTO(),
 						hostelDTO.getHostelId())).thenReturn(4);
@@ -49,7 +53,7 @@ public class HostelServiceImplTest extends TestCase {
 	public void testInsertHostel() throws Exception {
 		RoomDTO roomDTO = new RoomDTO();
 		List<BedDTO> bedDTOs = new ArrayList<BedDTO>();
-		List<RoomDTO> roomDTOs = new ArrayList<RoomDTO>(2);		
+		List<RoomDTO> roomDTOs = new ArrayList<RoomDTO>(2);
 		roomDTO.setBeds(bedDTOs);
 		roomDTOs.add(roomDTO);
 		hostelDTO.setRooms(roomDTOs);
@@ -58,11 +62,16 @@ public class HostelServiceImplTest extends TestCase {
 
 	}
 
-	public void testgetHostels() throws Exception {
+	public void testGetHostels() throws Exception {
 
 		List<HostelDTO> result = hostelServiceImpl.getHostels();
 		assertEquals(4, result.get(0).getHostelId());
 
 	}
 
+	public void testSearchHostelsByCity() throws Exception {
+		List<HostelDTO> hostelDTOListResult = hostelServiceImpl
+				.searchHostelsByCity("my_city");
+		assertEquals(4, hostelDTOListResult.get(0).getHostelId());
+	}
 }
