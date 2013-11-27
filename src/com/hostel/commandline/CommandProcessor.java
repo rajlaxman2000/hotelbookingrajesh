@@ -12,6 +12,7 @@ import com.hostel.model.BedCostDTO;
 import com.hostel.model.CustomerDTO;
 import com.hostel.model.OrderBedDTO;
 import com.hostel.model.OrderDTO;
+import com.hostel.model.RevenueDTO;
 import com.hostel.service.CustomerService;
 import com.hostel.service.HostelService;
 import com.hostel.service.OrderService;
@@ -103,13 +104,33 @@ public class CommandProcessor {
 	
 	public void adminRevenue(CommandDTO commandDTO){
 		
-		
-		
+		String startDateStr = commandDTO.getCmdParams().get("start_date");
+		String endDateStr = commandDTO.getCmdParams().get("end_date");
+		Date startDate=null,endDate=null;
+		if(startDateStr!=null && endDateStr!=null && AppUtil.checkValidDateStr(startDateStr) &&  AppUtil.checkValidDateStr(endDateStr) ){
+			startDate = AppUtil.getSqlDateByString(startDateStr);
+			endDate   = AppUtil.getSqlDateByString(endDateStr);
+		}	
+		try {
+			RevenueDTO revenueDTO = orderService.getRevenueByDates(startDate, endDate);
+			if(revenueDTO!=null){
+					System.out.println("************Revenue report*********");
+					System.out.println("Total revenue from Booking orders ::"+revenueDTO.getTotalOrdersRevenue());
+					System.out.println("Total revenue lost from cancellation returns ::"+revenueDTO.getTotalCancelAmount());
+					System.out.println("Actual complete revenue:: "+revenueDTO.getTotalGeneratedRevenue());
+			}else{
+				System.out.println("No report avaibale for the given critera, please try with some other criteria");
+			}
+		} catch (Exception e) {
+			System.err.println("There was some problem in fetching the revenue, pleas etry again later");
+		}
+			
+		System.out.println("I am in admin revenue section and good to go for servie class");	
 	}
 	
 	
 	public void adminOccupancy(CommandDTO commandDTO){
-		
+		System.out.println("I am in admin revenue section and good to go for servie class");	
 	}
 	public void bookCancelMethod(CommandDTO commandDTO){
 		//order_id can_before_hrs
@@ -123,12 +144,16 @@ public class CommandProcessor {
 				OrderDTO orderDTO =  orderService.getOrderDetailsByOrderId(orderId);
 				if(orderDTO!=null){
 					OrderDTO  canceldOrder = orderService.cancelOrder(orderDTO,canHrs);
-					System.out.println("***************************************************************");
-					System.out.println("Order has been cancelled successfully");
-					System.out.println("cancelled Order details ::");
-					System.out.println("***************************************************************");
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Order Id : "+canceldOrder.getOrderId()+", Returned Amount After cancellation : "+ canceldOrder.getOrderCancelAmt());
+					if(canceldOrder!=null){
+						System.out.println("***************************************************************");
+						System.out.println("Order has been cancelled successfully");
+						System.out.println("cancelled Order details ::");
+						System.out.println("***************************************************************");
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Order Id : "+canceldOrder.getOrderId()+", Returned Amount After cancellation : "+ canceldOrder.getOrderCancelAmt());
+					}else{
+						System.out.println("There was some problem to cancel the given order, please try after some time.");
+					}
 				}else{
 					System.out.println("There is no order for th egiven order id"); 
 				}
@@ -141,36 +166,34 @@ public class CommandProcessor {
 	}
 	
 	public void bookViewMethod(CommandDTO commandDTO){
-		String emailId;
-		String startDatStr = null,endDateStr=null;
+		String emailId =null;
+		
 		Date startDate=null,endDate=null;		
 		if(commandDTO.getCmdParams().get("user_emailId") !=null){
-			emailId =commandDTO.getCmdParams().get("emailId");
-			if(commandDTO.getCmdParams().get("start_date")!=null && commandDTO.getCmdParams().get("end_date")!=null){
-				startDatStr = commandDTO.getCmdParams().get("start_date");
-				endDateStr = commandDTO.getCmdParams().get("end_date");
-			}
-			try {
-				List<OrderDTO> orders  = orderService.getOrdersByDateRangeCustEmail(startDate, endDate, emailId);
-				if(orders!=null && orders.size()>0){
-					System.out.println("***************************************************************");
-					System.out.println("Order details ::");
-					System.out.println("***************************************************************");
-					for(OrderDTO order : orders){
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Order Id : "+order.getOrderId()+", Order amount : "+order.getOrderCost()+"Customer Email id ::"+order.getEmailId()+" Order palced Date"+order.getOrderPlcdDate());
-						System.out.println(" Order started Date : "+order.getOrderStartDate()+" Order End date : "+order.getOrderCancelDate());
-					}
-				}else{
-					System.out.println("There is no oders fo rthe given serach criteria, please try with new criteria");
-				}
-				
-			} catch (Exception e) {
-				System.out.println("There was some problem to fetch the orders with given details, Please try again later");
-			}
-		}else{
-			System.out.println("At least user mail id is required to locate the order");
+			emailId =commandDTO.getCmdParams().get("user_emailId");
+		}	
+		if(commandDTO.getCmdParams().get("start_date")!=null && commandDTO.getCmdParams().get("end_date")!=null){
+			startDate = AppUtil.getSqlDateByString(commandDTO.getCmdParams().get("start_date"));
+			endDate = AppUtil.getSqlDateByString(commandDTO.getCmdParams().get("end_date"));
 		}
+		try {
+			List<OrderDTO> orders  = orderService.getOrdersByDateRangeCustEmail(startDate, endDate, emailId);
+			if(orders!=null && orders.size()>0){
+				System.out.println("***************************************************************");
+				System.out.println("Order details ::");
+				System.out.println("***************************************************************");
+				for(OrderDTO order : orders){
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Order Id : "+order.getOrderId()+", Order amount : "+order.getOrderCost()+"Customer Email id ::"+order.getEmailId()+" Order palced Date"+order.getOrderPlcdDate());
+					System.out.println(" Order started Date : "+order.getOrderStartDate()+" Order End date : "+order.getOrderEndDate());
+				}
+			}else{
+				System.out.println("There is no oders fo rthe given serach criteria, please try with new criteria");
+			}	
+		} catch (Exception e) {
+			System.out.println("There was some problem to fetch the orders with given details, Please try again later");
+		}
+		
 	}
 	public void bookAddMethod(CommandDTO commandDTO){
 		//("bed_ids","user_id","start_date","end_date")

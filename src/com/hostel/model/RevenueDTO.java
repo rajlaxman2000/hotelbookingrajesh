@@ -2,46 +2,44 @@ package com.hostel.model;
 
 public class RevenueDTO {
 	
-	private long totalOrdersRevenue;
-	private long totalCancelAmount;
-	private long totalGeneratedRevenue;
+	private float totalOrdersRevenue;
+	private float totalCancelAmount;
+	private float totalGeneratedRevenue;
 	/**
 	 * @return the totalOrdersRevenue
 	 */
-	public long getTotalOrdersRevenue() {
+	public float getTotalOrdersRevenue() {
 		return totalOrdersRevenue;
 	}
 	/**
 	 * @param totalOrdersRevenue the totalOrdersRevenue to set
 	 */
-	public void setTotalOrdersRevenue(long totalOrdersRevenue) {
+	public void setTotalOrdersRevenue(float totalOrdersRevenue) {
 		this.totalOrdersRevenue = totalOrdersRevenue;
 	}
 	/**
 	 * @return the totalCancelAmount
 	 */
-	public long getTotalCancelAmount() {
+	public float getTotalCancelAmount() {
 		return totalCancelAmount;
 	}
 	/**
 	 * @param totalCancelAmount the totalCancelAmount to set
 	 */
-	public void setTotalCancelAmount(long totalCancelAmount) {
+	public void setTotalCancelAmount(float totalCancelAmount) {
 		this.totalCancelAmount = totalCancelAmount;
 	}
 	/**
 	 * @return the totalGeneratedRevenue
 	 */
-	public long getTotalGeneratedRevenue() {
+	public float getTotalGeneratedRevenue() {
 		return totalGeneratedRevenue;
 	}
 	/**
 	 * @param totalGeneratedRevenue the totalGeneratedRevenue to set
 	 */
-	public void setTotalGeneratedRevenue(long totalGeneratedRevenue) {
+	public void setTotalGeneratedRevenue(float totalGeneratedRevenue) {
 		this.totalGeneratedRevenue = totalGeneratedRevenue;
 	}
 	
-	
-
 }

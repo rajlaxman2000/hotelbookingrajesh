@@ -22,6 +22,7 @@
 	<bean id="bedCostRowMapper" class="com.hostel.dao.rowmapper.BedCostRowMapper" parent="genericRowMapper"/>
 	<bean id="customerRowMapper" class="com.hostel.dao.rowmapper.CustomerRowMapper" parent="genericRowMapper"/>
 	<bean id="orderRowMapper" class="com.hostel.dao.rowmapper.OrderRowMapper" parent="genericRowMapper"/>
+	<bean id="revenueRowMApper" class="com.hostel.dao.rowmapper.RevenueRowMApper" parent="genericRowMapper"/>
 	
 	<!-- hostel.dao,room.dao,bed.dao,bedCost.dao -->
 	<bean id="hostel.dao" class="com.hostel.dao.impl.HostelDAOImpl" parent="genericDAO" scope="prototype">     	
@@ -46,6 +47,7 @@
      
      <bean id="order.dao" class="com.hostel.dao.impl.OrderDAOImpl" parent="genericDAO" scope="prototype">     	
      	<property name="orderRowMapper" ref="orderRowMapper"/>
+     	<property name="revenueRowMApper" ref="revenueRowMApper"/>     	
      </bean>
      
      

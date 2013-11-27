@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.hostel.model.OrderDTO;
+import com.hostel.model.RevenueDTO;
 
 public interface OrderService {
 	
@@ -22,4 +23,6 @@ public interface OrderService {
 	public OrderDTO cancelOrder(OrderDTO orderDTO, int canHrs) throws Exception;
 	
 	public float calculateCancellationAmt(int HostelId, float orderAmt) throws Exception;
+	
+	public RevenueDTO getRevenueByDates(Date date1, Date date2) throws Exception;
 }
