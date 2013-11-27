@@ -19,12 +19,39 @@ public class OrderDTO {
 	//for rendering 
 	private int noOfBeds;
 	private String hostelName;
-	private String customerName;
-	
+	private String customerName;	
 	private String emailId;
+	//For using the cancel
+	private int orderCancellationHoursLimit;
+	private int cancellationFeePercant;  
 	
 	
 	
+	
+	/**
+	 * @return the orderCancellationHoursLimit
+	 */
+	public int getOrderCancellationHoursLimit() {
+		return orderCancellationHoursLimit;
+	}
+	/**
+	 * @param orderCancellationHoursLimit the orderCancellationHoursLimit to set
+	 */
+	public void setOrderCancellationHoursLimit(int orderCancellationHoursLimit) {
+		this.orderCancellationHoursLimit = orderCancellationHoursLimit;
+	}
+	/**
+	 * @return the cancellationFeePercant
+	 */
+	public int getCancellationFeePercant() {
+		return cancellationFeePercant;
+	}
+	/**
+	 * @param cancellationFeePercant the cancellationFeePercant to set
+	 */
+	public void setCancellationFeePercant(int cancellationFeePercant) {
+		this.cancellationFeePercant = cancellationFeePercant;
+	}
 	/**
 	 * @return the emailId
 	 */

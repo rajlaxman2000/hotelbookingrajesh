@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.hostel.dao.OrderDAO;
 import com.hostel.dao.rowmapper.OrderRowMapper;
+import com.hostel.dao.rowmapper.RevenueRowMApper;
 import com.hostel.model.CustomerDTO;
 import com.hostel.model.HostelDTO;
 import com.hostel.model.OrderBedDTO;
@@ -22,24 +23,39 @@ import com.hostel.model.RevenueDTO;
 public class OrderDAOImpl extends GenericDAO implements OrderDAO {
 	
 	OrderRowMapper  orderRowMapper;
+	RevenueRowMApper revenueRowMApper;
 	
+
+
 	@Override
 	public List<OrderDTO> getAllOrdersByForView(Date date1, Date date2, String custEmailId) throws Exception {
 		String emailClause;
 		List<OrderDTO> orders=null;
-		if(custEmailId!=null && custEmailId.length()>0){			
-			emailClause = new String(" or c.emailId like'%"+custEmailId+"%'");
+		StringBuilder dateClause = new StringBuilder(); 
+		
+		if(date1!=null && date2!=null){
+			dateClause.append("(:givenStartDate<=o.order_start_date and o.order_start_date<=:givenEndDate " +
+			"and :givenStartDate<=o.order_end_date and o.order_end_date<=:givenEndDate)");
+		}
+
+		if(custEmailId!=null && custEmailId.length()>0 ){
+			if(dateClause.length()>2){
+				emailClause = new String(" or c.email like'%"+custEmailId+"%'");
+			}else{
+				emailClause = new String(" c.email like'%"+custEmailId+"%'");
+			}
 		}else{
 			emailClause =new String(" ");
 		}
 		
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
-		paramMap.put("date1", date1);
-		paramMap.put("date2", date2);
+		paramMap.put("givenStartDate", date1);
+		paramMap.put("givenEndDate", date2);
 		paramMap.put("emailId", custEmailId);
 		
 		try {
-			orders = jdbcTemplate.query(getAllOrdersByForViewQry+emailClause, paramMap, orderRowMapper);
+			orders = jdbcTemplate.query(getAllOrdersByForViewQry+emailClause+dateClause.toString(), paramMap, orderRowMapper);
 		} catch(DataAccessException e) {
 			throw new Exception(e.getMessage(), e);
 		}
@@ -76,9 +92,16 @@ public class OrderDAOImpl extends GenericDAO implements OrderDAO {
 	}
 
 	@Override
-	public List<OrderDTO> getCompleteOrderDetailsById(int orderId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderDTO> getCompleteOrderDetailsById(int orderId) throws Exception {		
+		 List<OrderDTO> orders =null;
+		Map<String, Object> paramMap = new HashMap<String, Object>(1);
+		paramMap.put("orderId",new Integer(orderId));
+		try {
+			orders = jdbcTemplate.query(getCompleteOrderDetailsByIdQuery, paramMap, orderRowMapper);
+		} catch(DataAccessException e) {
+			throw new Exception(e.getMessage(), e);
+		}
+		return orders;
 	}
 
 	@Override
@@ -139,10 +162,24 @@ public class OrderDAOImpl extends GenericDAO implements OrderDAO {
 	}
 
 	@Override
-	public List<RevenueDTO> getRevenueByDates(Date date1, Date daate2)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RevenueDTO> getRevenueByDates(Date date1, Date date2) throws Exception {
+		String dateClause = new String(" where :givenStartDate<=order_placed_date and  order_placed_date<=:givenEndDate");
+		List<RevenueDTO> revenues=null;
+		Map<String, Object> paramMap = new HashMap<String, Object>(1);
+		StringBuilder Qury = new StringBuilder(getRevenueByDatesQuery);
+		if(date1!=null && date2!=null){
+			paramMap.put("givenStartDate",date1);
+			paramMap.put("givenEndDate",date2);
+			Qury.append(dateClause);
+			
+		}	
+		try {
+			revenues = jdbcTemplate.query(Qury.toString(), paramMap, revenueRowMApper);
+		} catch(DataAccessException e) {
+			throw new Exception(e.getMessage(), e);
+		}
+		
+		return revenues;
 	}
 
 	/**
@@ -158,7 +195,20 @@ public class OrderDAOImpl extends GenericDAO implements OrderDAO {
 	public void setOrderRowMapper(OrderRowMapper orderRowMapper) {
 		this.orderRowMapper = orderRowMapper;
 	}
+	
+	/**
+	 * @return the revenueRowMApper
+	 */
+	public RevenueRowMApper getRevenueRowMApper() {
+		return revenueRowMApper;
+	}
 
+	/**
+	 * @param revenueRowMApper the revenueRowMApper to set
+	 */
+	public void setRevenueRowMApper(RevenueRowMApper revenueRowMApper) {
+		this.revenueRowMApper = revenueRowMApper;
+	}
 
 	
 

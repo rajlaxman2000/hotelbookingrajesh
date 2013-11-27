@@ -27,9 +27,9 @@ public class OrderRowMapper  extends GenericRowMapper<OrderDTO> {
 			 dto.setEmailId(rs.getString("emailId"));
 		 }
 		 if( this.columns.contains("order_cost"))
-			 dto.setOrderCost(rs.getInt("order_cost"));
+			 dto.setOrderCost(rs.getFloat("order_cost"));
 		 if( this.columns.contains("order_cancel_amt"))
-			 dto.setOrderCancelAmt(rs.getInt("order_cancel_amt"));
+			 dto.setOrderCancelAmt(rs.getFloat("order_cancel_amt"));
 		 if( this.columns.contains("order_cancel_date"))
 			 dto.setOrderCancelDate(rs.getDate("order_cancel_date"));
 		 if( this.columns.contains("order_placed_date"))
@@ -37,14 +37,17 @@ public class OrderRowMapper  extends GenericRowMapper<OrderDTO> {
 		 if( this.columns.contains("order_start_date"))
 		 	dto.setOrderStartDate(rs.getDate("order_start_date"));
 		 if( this.columns.contains("order_end_date"))
-			 dto.setOrderEndDate(rs.getDate("order_end_date"));
-		 if( this.columns.contains("noofbeds"))
-			 dto.setNoOfBeds(rs.getInt("noofbeds"));
+			 dto.setOrderEndDate(rs.getDate("order_end_date"));		 
 		 if( this.columns.contains("hostel_name"))
 		 	dto.setHostelName(rs.getString("hostel_name"));
 		 if( this.columns.contains("first_name"))
 			 dto.setCustomerName(rs.getString("first_name")+rs.getString("last_name")); 
-		
+		//cancellation_hours_limit cancellation_fee_percant
+		 if( this.columns.contains("cancellation_hours_limit"))
+			 dto.setOrderCancellationHoursLimit(rs.getInt("cancellation_hours_limit"));
+		 if( this.columns.contains("cancellation_fee_percant"))
+			 dto.setCancellationFeePercant(rs.getInt("cancellation_fee_percant"));
+		 
 		return dto;
 	}
 
