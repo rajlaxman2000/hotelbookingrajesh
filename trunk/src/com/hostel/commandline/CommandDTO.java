@@ -7,11 +7,26 @@ public class CommandDTO {
 	private String cmdName;
 	
 	private String subCmdName;
-	
+		
 	private Map<String, String> cmdParams;
 	
+	// Will be used only for order booking
+	private String prvCmdName;
 	
 	
+	
+	/**
+	 * @return the prvCmdName
+	 */
+	public String getPrvCmdName() {
+		return prvCmdName;
+	}
+	/**
+	 * @param prvCmdName the prvCmdName to set
+	 */
+	public void setPrvCmdName(String prvCmdName) {
+		this.prvCmdName = prvCmdName;
+	}
 	/**
 	 * @return the subCmdName
 	 */

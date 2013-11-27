@@ -8,6 +8,10 @@ public class OrderBedDTO {
 	private int bedId;
 	private Date startDate;
 	private Date endDate;
+	
+	public OrderBedDTO(int bedId){
+		this.bedId = bedId;
+	}
 	/**
 	 * @return the orderBedId
 	 */

@@ -21,7 +21,22 @@ public class OrderDTO {
 	private String hostelName;
 	private String customerName;
 	
+	private String emailId;
 	
+	
+	
+	/**
+	 * @return the emailId
+	 */
+	public String getEmailId() {
+		return emailId;
+	}
+	/**
+	 * @param emailId the emailId to set
+	 */
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 	/**
 	 * @return the hostelName
 	 */

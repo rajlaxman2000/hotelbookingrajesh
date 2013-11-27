@@ -11,6 +11,8 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 public class CommandLineStart {
 	
+	//public static CommandDTO commandDTO;
+	
 	public static void main (String[] args){
 		
 		GenericXmlApplicationContext context = new GenericXmlApplicationContext();		
@@ -19,16 +21,14 @@ public class CommandLineStart {
 		context.load("classpath:spring-beans-services.xml");
 		context.refresh();
 		
-		
-		
-		/*
-		GenericXmlApplicationContext context = new GenericXmlApplicationContext();
+	
+		/*GenericXmlApplicationContext context = new GenericXmlApplicationContext();
 		context.load("classpath:spring-beans-actions.xml");
 		context.load("classpath:spring-beans-dao.xml");
 		context.refresh();
-		
-			System.out.pradintln("Enter command");
-			CommandProcessor commandProcessor= new CommandProcessor();
+		*/
+			System.out.println("Enter command");
+			CommandProcessor commandProcessor;
 			Scanner scanner = new Scanner(System.in);  
 			
 			do{		          
@@ -36,33 +36,47 @@ public class CommandLineStart {
 		        if(command.trim().equalsIgnoreCase("exit")){
 		        	break;
 		        }
-		        
-		        
+		        commandProcessor= (CommandProcessor)context.getBean("command.processor");
+		        String prvCommand = new String();
+		        if(commandProcessor!=null && commandProcessor.commandDTO!=null 
+		        		&& commandProcessor.commandDTO.getCmdName()!=null && commandProcessor.commandDTO.getCmdName().equalsIgnoreCase("search")){
+		        	prvCommand = commandProcessor.commandDTO.getCmdName();
+		        }
+				CommandDTO commandDTO = processCmdString(command.trim());
+				if(prvCommand!=null && prvCommand.length()>0 ){
+					commandDTO.setPrvCmdName(prvCommand);
+				}
+				boolean result  = validateCommandDTO(commandDTO);				
+				if(result){						
+					commandProcessor.startProcessing(commandDTO);
+				}else{
+					System.out.println("Please provide the correct command to execute further, type 'exit' to quit");
+				}
 		        
 			}while(true);
-			*/
-		
-		CommandProcessor commandProcessor= (CommandProcessor)context.getBean("command.processor");
-		
-		
 		
 		/*String cmd1 = new String("search --start_date adad --end_date 20130702 --beds 7");		
 		String cmd2 = new String("book add --search_id 1234 --user_id 678");	
 		*/
+		/*
+		CommandProcessor commandProcessor= (CommandProcessor)context.getBean("command.processor");
 		Scanner scanner = new Scanner(System.in);  
 		String command = scanner.nextLine(); 
 		
 		CommandDTO commandDTO = processCmdString(command.trim());
-		boolean result  = validateCommandDTO(commandDTO);		
+		boolean result  = validateCommandDTO(commandDTO);
+		
 		if(result){
+			commandDTO.setPrvCmdName(commandDTO.getCmdName());
 			commandProcessor.startProcessing(commandDTO);
 		}else{
 			System.out.println("Please provide the correct command to execute further, type 'exit' to quit");
-		}
+		}*/
 	}	
 	
 	public static CommandDTO processCmdString(String cmd){		
 		System.out.println("Processing the command");
+		
 		CommandDTO commandDTO = new CommandDTO(); 
 		Map<String, String> params = new HashMap<String, String>();
 		String[] retval = cmd.split("--");
@@ -94,13 +108,15 @@ public class CommandLineStart {
 			}	
 		}
 		else if(commandDTO.getCmdName().equalsIgnoreCase("book") && (commandDTO.getSubCmdName().equalsIgnoreCase("add") || 
-				commandDTO.getSubCmdName().equalsIgnoreCase("cancel") || commandDTO.getSubCmdName().equalsIgnoreCase("view")) ){
-			
+				commandDTO.getSubCmdName().equalsIgnoreCase("cancel") || commandDTO.getSubCmdName().equalsIgnoreCase("view")) ){			
 			actualParamsList = AppUtil.bookCmdMap.get("book_"+commandDTO.getSubCmdName());
 			result = checkParmsFineness(commandDTO.getCmdParams(),actualParamsList);			
-			
+			if(commandDTO.getCmdName().equalsIgnoreCase("book") && commandDTO.getSubCmdName().equalsIgnoreCase("add")){
+				result = (commandDTO.getPrvCmdName().equalsIgnoreCase("search"))?true:false;
+				System.out.println("Please make sure you run search before booking");
+			}			
 		}else if(commandDTO.getCmdName().equalsIgnoreCase("user") && (commandDTO.getSubCmdName().equalsIgnoreCase("add") || 
-				commandDTO.getSubCmdName().equalsIgnoreCase("change") || commandDTO.getSubCmdName().equalsIgnoreCase("edit")) ){
+				commandDTO.getSubCmdName().equalsIgnoreCase("edit") || commandDTO.getSubCmdName().equalsIgnoreCase("view")) ){
 			actualParamsList = AppUtil.userCmdMap.get("user_"+commandDTO.getSubCmdName());
 			result = checkParmsFineness(commandDTO.getCmdParams(),actualParamsList);
 			

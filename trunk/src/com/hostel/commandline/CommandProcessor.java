@@ -2,13 +2,19 @@ package com.hostel.commandline;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.hostel.model.BedCostDTO;
 import com.hostel.model.CustomerDTO;
+import com.hostel.model.OrderBedDTO;
+import com.hostel.model.OrderDTO;
 import com.hostel.service.CustomerService;
 import com.hostel.service.HostelService;
+import com.hostel.service.OrderService;
 import com.hostel.service.SearchService;
 import com.hostel.service.XmlUploadService;
 import com.hostel.util.AppUtil;
@@ -24,7 +30,16 @@ public class CommandProcessor {
 	
 	public CustomerService customerService;
 	
+	public OrderService orderService;
+	
+	public SearchResultDTO searchResultDTO;
+	
+	public CommandDTO commandDTO;
+	
+	
 	public void startProcessing(CommandDTO commandDTO){
+		
+		
 		
 		String cmdStr;
 		String subCmdStr = "Empty";
@@ -54,19 +69,19 @@ public class CommandProcessor {
 			adminLoadMethod(commandDTO);
 		}
 		else if(cmdStr.equalsIgnoreCase("admin_revenue")){
-				
+			adminRevenue(commandDTO);	
 		}
 		else if(cmdStr.equalsIgnoreCase("admin_occupancy")){
-			
+			adminOccupancy(commandDTO);
 		}
 		else if(cmdStr.equalsIgnoreCase("book_add")){
-			
+			bookAddMethod(commandDTO);
 		}
 		else if(cmdStr.equalsIgnoreCase("book_cancel")){
-				
+			bookCancelMethod(commandDTO);
 		}
 		else if(cmdStr.equalsIgnoreCase("book_view")){
-			
+			bookViewMethod(commandDTO);
 		}
 		else if(cmdStr.equalsIgnoreCase("user_add")){
 			userAddMethod(commandDTO);
@@ -76,16 +91,168 @@ public class CommandProcessor {
 		}
 		else if(cmdStr.equalsIgnoreCase("user_view")){
 			userSearchMethid(commandDTO);
+		}else{
+			System.out.println("We are not supporting other operations at thi spoint of time.");
 		}
 
 		/*for (Map.Entry<String, String> entry : commandDTO.entrySet()) {
 		    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		}*/
 		System.out.println();
+	}
+	
+	public void adminRevenue(CommandDTO commandDTO){
+		
+		
 		
 	}
 	
 	
+	public void adminOccupancy(CommandDTO commandDTO){
+		
+	}
+	public void bookCancelMethod(CommandDTO commandDTO){
+		//order_id can_before_hrs
+		int orderId, canHrs=0;		
+		if(commandDTO.getCmdParams().get("order_id") !=null && commandDTO.getCmdParams().get("order_id").matches(AppUtil.numbRegEx)){
+			orderId =Integer.valueOf(commandDTO.getCmdParams().get("order_id")).intValue();
+			if(commandDTO.getCmdParams().get("can_before_hrs")!=null && commandDTO.getCmdParams().get("can_before_hrs").matches(AppUtil.numbRegEx) ){
+				canHrs = Integer.valueOf(commandDTO.getCmdParams().get("can_before_hrs"));				
+			}
+			try{
+				OrderDTO orderDTO =  orderService.getOrderDetailsByOrderId(orderId);
+				if(orderDTO!=null){
+					OrderDTO  canceldOrder = orderService.cancelOrder(orderDTO,canHrs);
+					System.out.println("***************************************************************");
+					System.out.println("Order has been cancelled successfully");
+					System.out.println("cancelled Order details ::");
+					System.out.println("***************************************************************");
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Order Id : "+canceldOrder.getOrderId()+", Returned Amount After cancellation : "+ canceldOrder.getOrderCancelAmt());
+				}else{
+					System.out.println("There is no order for th egiven order id"); 
+				}
+			}catch (Exception e) {
+			System.err.println("There was some problem to cancel the given order, please try after some time.");
+			}
+		}else{
+			System.out.println("At least correct order id is required to cancel the order");
+		}
+	}
+	
+	public void bookViewMethod(CommandDTO commandDTO){
+		String emailId;
+		String startDatStr = null,endDateStr=null;
+		Date startDate=null,endDate=null;		
+		if(commandDTO.getCmdParams().get("user_emailId") !=null){
+			emailId =commandDTO.getCmdParams().get("emailId");
+			if(commandDTO.getCmdParams().get("start_date")!=null && commandDTO.getCmdParams().get("end_date")!=null){
+				startDatStr = commandDTO.getCmdParams().get("start_date");
+				endDateStr = commandDTO.getCmdParams().get("end_date");
+			}
+			try {
+				List<OrderDTO> orders  = orderService.getOrdersByDateRangeCustEmail(startDate, endDate, emailId);
+				if(orders!=null && orders.size()>0){
+					System.out.println("***************************************************************");
+					System.out.println("Order details ::");
+					System.out.println("***************************************************************");
+					for(OrderDTO order : orders){
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Order Id : "+order.getOrderId()+", Order amount : "+order.getOrderCost()+"Customer Email id ::"+order.getEmailId()+" Order palced Date"+order.getOrderPlcdDate());
+						System.out.println(" Order started Date : "+order.getOrderStartDate()+" Order End date : "+order.getOrderCancelDate());
+					}
+				}else{
+					System.out.println("There is no oders fo rthe given serach criteria, please try with new criteria");
+				}
+				
+			} catch (Exception e) {
+				System.out.println("There was some problem to fetch the orders with given details, Please try again later");
+			}
+		}else{
+			System.out.println("At least user mail id is required to locate the order");
+		}
+	}
+	public void bookAddMethod(CommandDTO commandDTO){
+		//("bed_ids","user_id","start_date","end_date")
+		String bedIds[] = commandDTO.getCmdParams().get("bed_ids").split(",");
+		String userIdStr = commandDTO.getCmdParams().get("user_id");
+		String startDatStr = null,endDateStr=null;
+		if(commandDTO.getCmdParams().get("start_date")!=null && commandDTO.getCmdParams().get("end_date")!=null){
+			startDatStr = commandDTO.getCmdParams().get("start_date");
+			endDateStr = commandDTO.getCmdParams().get("end_date");
+		}	
+		Date startDate,endDate;
+		
+		boolean result= false;
+		OrderDTO orderDTO = new OrderDTO();
+		List<OrderBedDTO> orderBedDtos = new ArrayList<OrderBedDTO>(); 
+		if(startDatStr!=null && endDateStr!=null && AppUtil.checkValidDateStr(startDatStr) 
+				&& AppUtil.checkValidDateStr(endDateStr) && userIdStr.matches(AppUtil.numbRegEx)){
+			startDate = AppUtil.getSqlDateByString(startDatStr);
+			endDate = AppUtil.getSqlDateByString(endDateStr);
+			if(this.searchResultDTO.getStartDate()!=null && this.searchResultDTO.getEndDate()!=null && 
+					this.searchResultDTO.getStartDate().compareTo(startDate)<0 && this.searchResultDTO.getEndDate().compareTo(endDate)>0)
+				result = true;
+			for (String bedIdStr : bedIds){
+				bedIdStr.trim();
+				if(bedIdStr.matches(AppUtil.numbRegEx) && this.searchResultDTO.getBedIs().contains(Integer.valueOf(bedIdStr))){
+					
+					result = true;
+					int bedId = Integer.valueOf(bedIdStr).intValue();
+					orderBedDtos.add(new OrderBedDTO(bedId));					
+				}	
+			}
+			
+			if(result){
+				orderDTO.setCustomerId(Integer.valueOf(userIdStr).intValue());
+				orderDTO.setHostelId(this.searchResultDTO.getHostelId());
+				orderDTO.setOrderBeds(orderBedDtos);
+				orderDTO.setOrderStartDate(startDate);
+				orderDTO.setOrderEndDate(endDate);
+				orderDTO.setOrderCancelAmt(0);
+				float cost = calculateOrderCost(this.searchResultDTO.getResultBedCosts(),startDate, endDate, bedIds);
+				orderDTO.setOrderCost(cost);
+				System.out.println("Calculated cost :: "+cost);
+				System.out.println("I am goog to go to service layer");
+				try {
+					int orderId = orderService.createOrder(orderDTO);
+					//write some thing to get it printed  
+				} catch (Exception e) {
+					System.out.println("There is an problem to book order, please try again");
+					e.printStackTrace();
+				}
+				//order_cost order_cancel_amt  order_cancel_date order_placed_date (CURDATE()) order_start_date order_end_date active
+				
+			
+			}else{
+				System.err.println("Order book detaisl doesn't match with last search criteria, please try once again");
+			}
+		}else{
+			System.out.println("Please enter valid params with proper data types to proceed order");
+			commandDTO.setPrvCmdName("search");
+		}
+		
+	}
+	public float calculateOrderCost(List<BedCostDTO> bedCostDTOs, Date startDate,Date endDate,String[] beds){
+		
+		
+		/* if gievn start date 
+		 * dto.daterange1<startDate<dta.daterange2 or dto.daterange1<endDate>dto.daterange2
+		 * */
+		float cost=0;int id=0;
+		for(String bed : beds){			
+			id = Integer.valueOf(bed).intValue();
+			for(BedCostDTO dto : bedCostDTOs){
+				if(	id == dto.getBedId() && 
+						((dto.getDateRange1().compareTo(startDate)<=0 && startDate.compareTo(dto.getDateRange2())<=0) 
+								|| (dto.getDateRange1().compareTo(endDate)<=0 &&  endDate.compareTo(dto.getDateRange2())<=0)) ){
+					cost = cost + dto.getBedCost();
+				}	
+			}			
+		}
+				
+		return cost;
+	}
 		
 	public void adminLoadMethod(CommandDTO commandDTO){		
 		
@@ -106,6 +273,7 @@ public class CommandProcessor {
 		
 		if(commandDTO.getCmdParams().get("city")!=null){
 			cityName = commandDTO.getCmdParams().get("city");
+			cityName.replaceAll("_", " ");
 		}
 		if(commandDTO.getCmdParams().get("start_date")!=null && AppUtil.checkValidDateStr(commandDTO.getCmdParams().get("start_date"))){
 			startDateStr = commandDTO.getCmdParams().get("start_date");	
@@ -120,15 +288,23 @@ public class CommandProcessor {
 		}
 		System.err.println("Proceeding for search with below valid criteria");
 		System.out.println("city name : " +cityName+",start date : "+ startDate+ ", End Date : "+ endDate+", beds : "+noOFBeds);
-		
+		this.searchResultDTO = new SearchResultDTO();  
+		this.commandDTO = commandDTO;
 		try {			
 			availableBeds = searchService.searchByCriteria(cityName, startDate, endDate, noOFBeds);
 			if(availableBeds!=null && availableBeds.size()>0){
-				System.out.println( "--------------------------------------");
+				System.out.println( "-----------------------------------------------------------------------------------------------------------------");
+				Collections.sort(availableBeds);				
 				for(BedCostDTO bedCostDto: availableBeds ){
 					System.out.println("Bed serach id:: "+bedCostDto.getBedId() +"-- StartDate:"+bedCostDto.getDateRange1()+" to -- EndDate:"+bedCostDto.getDateRange2()+" :: cost ::"+bedCostDto.getBedCost()+"$");
-					System.out.println( "--------------------------------------");
+					System.out.println( "-----------------------------------------------------------------------------------------------------------------");					
 				}
+				 
+				searchResultDTO.setResultBedCosts(availableBeds);
+				searchResultDTO.setStartDate(startDate);
+				searchResultDTO.setEndDate(endDate);
+				searchResultDTO.setNoOfBeds(noOFBeds);
+				setSearchResultDTO(searchResultDTO);
 			}else{
 				System.out.println("There are no beds availabel for the given serach criteria, please try with new criteria");
 			}	
@@ -136,7 +312,6 @@ public class CommandProcessor {
 			System.out.println("There is a problem to fetch the data by given criteria, please try again later");
 			e.printStackTrace();
 		}
-		
 		
 	}
 	
@@ -316,6 +491,40 @@ public class CommandProcessor {
 	 */
 	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
+	}
+
+
+	/**
+	 * @return the orderService
+	 */
+	public OrderService getOrderService() {
+		return orderService;
+	}
+
+
+	/**
+	 * @param orderService the orderService to set
+	 */
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
+
+
+	/**
+	 * @return the searchResultDTO
+	 */
+	public SearchResultDTO getSearchResultDTO() {
+		return searchResultDTO;
+	}
+
+
+	/**
+	 * @param searchResultDTO the searchResultDTO to set
+	 */
+	public void setSearchResultDTO(SearchResultDTO searchResultDTO) {
+		this.searchResultDTO = searchResultDTO;
 	}	
+	
+	
 
 }

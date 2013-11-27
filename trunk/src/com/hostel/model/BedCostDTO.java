@@ -20,9 +20,14 @@ public class BedCostDTO implements Comparable<BedCostDTO> {
 	 * Comparing by bed Ids
 	 */
 	@Override
-	public int compareTo(BedCostDTO o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(BedCostDTO bedCostDTO) {
+		int result=0;
+		if (this.getBedCost()-bedCostDTO.getBedCost()>0){
+			result =1;
+		}else if(this.getBedCost()-bedCostDTO.getBedCost()<0){
+			result =-1;
+		}
+		return result;
 	}
 	
 	

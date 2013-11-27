@@ -18,7 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		List<CustomerDTO> customerDTOs = null;
 		try {
-			customerDAO.searchCutomer(firstName,lastName,email);	
+			customerDTOs = customerDAO.searchCutomer(firstName,lastName,email);	
 		} catch (Exception e) {
 			throw new Exception(e.getMessage(), e);
 		}

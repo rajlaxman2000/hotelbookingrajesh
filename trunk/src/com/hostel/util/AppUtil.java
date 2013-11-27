@@ -11,9 +11,9 @@ public abstract class AppUtil {
 	{{put("search",new ArrayList<String>(Arrays.asList("city","start_date","end_date", "beds")));}};
     
 	public static final HashMap<String, ArrayList<String>> bookCmdMap = new HashMap<String, ArrayList<String>>()
-    	{{put("book_add",new ArrayList<String>(Arrays.asList("city","start_date","end_date", "beds")));
-    	  put("book_cancel",new ArrayList<String>(Arrays.asList("order_id")));
-    	  put("book_view",new ArrayList<String>(Arrays.asList("start_date","end_date","user_id", "user_emailId")));
+    	{{put("book_add",new ArrayList<String>(Arrays.asList("bed_ids","user_id","start_date","end_date")));
+    	  put("book_cancel",new ArrayList<String>(Arrays.asList("order_id","can_before_hrs")));
+    	  put("book_view",new ArrayList<String>(Arrays.asList("start_date","end_date","user_emailId")));
     	}};
     	
     public static final HashMap<String, ArrayList<String>> userCmdMap = new HashMap<String, ArrayList<String>>()

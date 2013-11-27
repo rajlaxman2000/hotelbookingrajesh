@@ -56,9 +56,9 @@ public class CustomerDAOImpl extends GenericDAO implements CustomerDAO {
 		if(email!=null){
 			paramMap.put("email", email);
 			if(firstName == null && lastName == null){
-				qryStr.append("emial=:email");
+				qryStr.append("email=:email");
 			}else if(firstName != null || lastName!=null){
-				qryStr.append(" or emial=:email");
+				qryStr.append(" or email=:email");
 			}
 		}	
 		
