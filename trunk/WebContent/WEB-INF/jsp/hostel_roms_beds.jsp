@@ -6,7 +6,7 @@
 		<s:iterator var="bed" value="#room.beds" status="rowstatus">
 			<tr><span>Bed Details:</span></tr>
 			 <br/>
-			 <tr>Bed Id : <s:property value="#bed.bedId"/></tr>		
+			 <tr>Bed Id:<s:property value="#bed.bedId"/></tr>		
 			 <tr>Bed Name : <s:property value="#bed.bedName"/></tr>		
 			 <tr>Bed Price : <s:property value="#bed.price"/></tr>
 			 <tr>Bed Availability  :<s:property value="#bed.available"/></tr>	

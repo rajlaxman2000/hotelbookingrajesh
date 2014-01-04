@@ -14,6 +14,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/resources/spring/spring-beans-actions.xml,
+			/WEB-INF/resources/spring/spring-beans-services.xml,
 			/WEB-INF/resources/spring/spring-beans-dao.xml
 		</param-value>
 	</context-param> 
@@ -43,11 +44,14 @@
     <welcome-file-list>
         <welcome-file>/WEB-INF/jsp/Login-2.jsp</welcome-file>
     </welcome-file-list>
-    -->
+   
    
     <welcome-file-list>
-		<welcome-file>/WEB-INF/jsp/tiles-integ/index.jsp</welcome-file>
+		<welcome-file>/WEB-INF/jsp/hostel_base.jsp</welcome-file>
 	</welcome-file-list>
-	
+	 -->
+	  <welcome-file-list>
+	  	<welcome-file>/index</welcome-file>
+	  </welcome-file-list>
     
 </web-app>

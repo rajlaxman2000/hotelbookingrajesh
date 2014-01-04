@@ -39,27 +39,31 @@ public class SearchServiceImpl implements SearchService {
 		
 		if(actualBedCosts!=null && actualBedCosts.size()>0){
 			/*Now among them take each bed and check it is available by checking the orders
-			 * The list might contain same bed ids with different costDTOs, So plan is to get the each bedId List and send it to the bleow mthod 
-			 * which will first sort by start date and then find min max and then check with that Is there any order booked fo rthat date or not
-			 * So the below method will return true if it is avaiable so we just need to add that bedCostDTO for that id to available bedCostDTOS  
+			 * The list might contain same bed ids with different costDTOs, So plan is to get the each bedId List and send it to the below method 
+			 * which will first sort by start date and then find min max and then check with that Is there any order booked for that date or not
+			 * So the below method will return true if it is available  so we just need to add that bedCostDTO for that id to available bedCostDTOS  
 			 */
 			int initialBedId = actualBedCosts.get(0).getBedId();
 			List<BedCostDTO> tmpBedCostDTOs = new ArrayList<BedCostDTO>();
-			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();  
-			for(int i=0; i<actualBedCosts.size();i++){			
-				if(initialBedId!=actualBedCosts.get(i).getBedId() || i == (actualBedCosts.size()-1) ){	
-					if(i == (actualBedCosts.size()-1)){
+				tmpBedCostDTOs.add(actualBedCosts.get(0));
+			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();
+			
+			for(int i=1; i<=actualBedCosts.size();i++){
+				// Means if the bedId which we took will be not be proceesed, so we just keep on adding it to tempBedCots,
+				//until we get new entry of BedId 
+				if(i == actualBedCosts.size()){
+					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+				}else{
+					if(initialBedId!=actualBedCosts.get(i).getBedId()){					
+						bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+						tmpBedCostDTOs.clear();
+						tmpBedCostDTOs.add(actualBedCosts.get(i));
+						initialBedId = actualBedCosts.get(i).getBedId();
+					}else{
 						tmpBedCostDTOs.add(actualBedCosts.get(i));
 					}
-					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
-					tmpBedCostDTOs.clear();
-					tmpBedCostDTOs.add(actualBedCosts.get(i));
-					initialBedId = actualBedCosts.get(i).getBedId();
-				}else{
-					tmpBedCostDTOs.add(actualBedCosts.get(i));
-				}
+				}	
 			}
-			
 			// Check whether the beds we got sufficient numbers or not			
 			if(bedCostsMapById.entrySet().size()>= noOfBeds){
 				for(Map.Entry<Integer, List<BedCostDTO>> entry: bedCostsMapById.entrySet() ){			
@@ -98,6 +102,7 @@ public class SearchServiceImpl implements SearchService {
 		return result;
 		
 	}
+	
 	/**
 	 * This method will bring all the beds costs which are occupied this will be used by Admin to see the occupancy 
 	 * @param cityName
@@ -121,24 +126,53 @@ public class SearchServiceImpl implements SearchService {
 				actualBedCosts = bedService.getBedCostsByHostelIdDateRanges(hostelDTO.getHostelId(), startDate, endDate);
 			}
 		}
+		/*
+		int initialBedId = actualBedCosts.get(0).getBedId();
+			List<BedCostDTO> tmpBedCostDTOs = new ArrayList<BedCostDTO>();
+				tmpBedCostDTOs.add(actualBedCosts.get(0));
+			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();
+			
+			for(int i=1; i<=actualBedCosts.size();i++){
+				// Means if the bedId which we took will be not be proceesed, so we just keep on adding it to tempBedCots,
+				//until we get new entry of BedId 
+				if(i == actualBedCosts.size()){
+					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+				}else{
+					if(initialBedId!=actualBedCosts.get(i).getBedId()){					
+						bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+						tmpBedCostDTOs.clear();
+						tmpBedCostDTOs.add(actualBedCosts.get(i));
+						initialBedId = actualBedCosts.get(i).getBedId();
+					}else{
+						tmpBedCostDTOs.add(actualBedCosts.get(i));
+					}
+				}	
+			}
+		 */
 		
 		if(actualBedCosts!=null && actualBedCosts.size()>0){			
 			int initialBedId = actualBedCosts.get(0).getBedId();
 			List<BedCostDTO> tmpBedCostDTOs = new ArrayList<BedCostDTO>();
+				tmpBedCostDTOs.add(actualBedCosts.get(0));
 			Map<Integer, List<BedCostDTO>> bedCostsMapById = new HashMap<Integer, List<BedCostDTO>>();  
-			for(int i=0; i<actualBedCosts.size();i++){			
-				if(initialBedId!=actualBedCosts.get(i).getBedId() || i == (actualBedCosts.size()-1) ){	
-					if(i == (actualBedCosts.size()-1)){
+			for(int i=1; i<=actualBedCosts.size();i++){			
+				// Means if the bedId which we took will be not be proceesed, so we just keep on adding it to tempBedCots,
+				//until we get new entry of BedId 
+				if(i == actualBedCosts.size()){
+					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+				}else{
+					if(initialBedId!=actualBedCosts.get(i).getBedId()){					
+						bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
+						tmpBedCostDTOs.clear();
+						tmpBedCostDTOs.add(actualBedCosts.get(i));
+						initialBedId = actualBedCosts.get(i).getBedId();
+					}else{
 						tmpBedCostDTOs.add(actualBedCosts.get(i));
 					}
-					bedCostsMapById.put(initialBedId, new ArrayList<BedCostDTO>(tmpBedCostDTOs));
-					tmpBedCostDTOs.clear();
-					tmpBedCostDTOs.add(actualBedCosts.get(i));
-					initialBedId = actualBedCosts.get(i).getBedId();
-				}else{
-					tmpBedCostDTOs.add(actualBedCosts.get(i));
 				}
 			}
+			
+			
 			for(Map.Entry<Integer, List<BedCostDTO>> entry: bedCostsMapById.entrySet() ){			
 				List<BedCostDTO> dtos = entry.getValue();
 				for(BedCostDTO dto: dtos){
