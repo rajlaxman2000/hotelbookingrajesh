@@ -16,14 +16,29 @@
       	</result-types>
       	
       	<action name="index">
-            <result type="tiles">login</result>           
+            <result type="tiles">hostelBaseLayout</result>           
         </action>
+        <action name="search">
+            <result type="tiles" name="default">searchLayout</result> 
+            <result type="tiles" name="succuess">searchResult</result>  
+            <result type="tiles" name="failure">searchError</result>        
+        </action>
+        <!--
+         <action name="search">
+            <result type="tiles" name="default">searchLayout</result> 
+            <result type="tiles" name="succuess">searchResult</result>  
+            <result type="tiles" name="failure">searchError</result>        
+        </action> 
+         -->
         
+        
+        
+        <!-- 
         <action name="login" class="login.action">
             <result name="success">/WEB-INF/jsp/Welcome-2.jsp</result>
             <result name="error">/WEB-INF/jsp/Login-2.jsp</result>
         </action>
-        
+     
         <action name="*Link" method="{1}" class="link.action">
 			<result name="welcome" type="tiles">welcome</result>
 			<result name="friends" type="tiles">friends</result>
@@ -40,7 +55,7 @@
         
         
         
-		<!-- 
+	
         <action name="*Menu" method="{1}" class="com.hostel.action.SampleMenuAction">
         	<result name="tiger" type="tiles">tiger</result>
         	<result name="lion" type="tiles">lion</result>

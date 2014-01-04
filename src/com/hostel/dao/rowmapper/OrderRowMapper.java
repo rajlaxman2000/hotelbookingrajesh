@@ -23,8 +23,8 @@ public class OrderRowMapper  extends GenericRowMapper<OrderDTO> {
 		 if( this.columns.contains("hostel_id")){
 			 dto.setHostelId(rs.getInt("hostel_id"));
 		 }
-		 if( this.columns.contains("emailId")){
-			 dto.setEmailId(rs.getString("emailId"));
+		 if( this.columns.contains("email")){
+			 dto.setEmailId(rs.getString("email"));
 		 }
 		 if( this.columns.contains("order_cost"))
 			 dto.setOrderCost(rs.getFloat("order_cost"));

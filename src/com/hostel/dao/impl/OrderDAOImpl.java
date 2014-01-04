@@ -31,7 +31,7 @@ public class OrderDAOImpl extends GenericDAO implements OrderDAO {
 	public List<OrderDTO> getAllOrdersByForView(Date date1, Date date2, String custEmailId) throws Exception {
 		String emailClause;
 		List<OrderDTO> orders=null;
-		StringBuilder dateClause = new StringBuilder(); 
+		StringBuilder dateClause = new StringBuilder(" "); 
 		
 		if(date1!=null && date2!=null){
 			dateClause.append("(:givenStartDate<=o.order_start_date and o.order_start_date<=:givenEndDate " +
@@ -55,7 +55,7 @@ public class OrderDAOImpl extends GenericDAO implements OrderDAO {
 		paramMap.put("emailId", custEmailId);
 		
 		try {
-			orders = jdbcTemplate.query(getAllOrdersByForViewQry+emailClause+dateClause.toString(), paramMap, orderRowMapper);
+			orders = jdbcTemplate.query(getAllOrdersByForViewQry+dateClause.toString()+emailClause, paramMap, orderRowMapper);
 		} catch(DataAccessException e) {
 			throw new Exception(e.getMessage(), e);
 		}

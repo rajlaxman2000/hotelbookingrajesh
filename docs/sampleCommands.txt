@@ -1,0 +1,65 @@
+Final sample commands :: 
+Search  : 
+	Syntax : (in search if city name contains space please provide underscore in between)
+		search --city --start_date --end_date
+	Examples :	
+		search 
+		search --city san
+		search --city san --start_date 20140701 --end_date 20140603
+		search --start_date 20140704 --end_date 20140605
+------------------------------------------------------------------------------------------
+Book
+	Syntax : 
+		book add --bed_ids [id1,id2] --user_id  --start_date --end_date 
+		book view --user_emailId --start_date  --end-date
+		book view --user_emailId --start_date  --end-date
+		book cancel --order_id  --can_before_hrs 
+	Examples : 
+		book add --bed_ids 1,87 --user_id 1 --start_date 20140701 --end_date 20140702
+		book add --bed_ids 1,2,3 --user_id 1 --start_date 20140701 --end_date 20140702
+		book view --user_emailId geetha@gmail.com
+		book view --start_date 20140702 --end_date 20140605
+		book view --user_emailId geetha@gmail.com --start_date 20140701 --end_date 20140706
+		book cancel : 
+			even it is not so logical to test the flow, the param can_before_hrs introduced if we give hours system will check whether the given hours is with in the range 
+			based on it refund amount will be calculated as per the hostel norms.
+			book cancel --order_id 2  --can_before_hrs  50
+			book cancel --order_id 2  --can_before_hrs 40
+--------------------------------------------------------------------------------------------------------------			
+User 		
+	Syntax :
+		user view --first_name --last_name --email
+		user add --first_name --last_name --email [--cc_number --expiration_date --security_code --phone ] 
+		user edit --user_id --first_name --last_name --email [--cc_number --expiration_date --security_code --phone ] 
+	Examples :
+		user view --first_name geetha --last_name --email 	
+		user view --email geetha@gmail
+		user add --first_name geetha --last_name sankineni --email geetha@gmail.com
+		user add --first_name john --last_name kumar --email john.kumar@gmail.com
+		user edit --user_id 5 --cc_number 400060005000 --expiration_date 072015 --security_code 123 --phone +345657987
+		
+		user edit --user_id 4 --email geetha123@gmail.com
+----------------------------------------------------------------------------------------------------------------		
+			
+Admin
+	Syntax : 
+		admin load --path 
+		admin load --path D:\WorkSpace-personal\hostel-inventory-1-20131117.XML
+		admin load --path D:\WorkSpace-personal\hostel-inventory-2-20131117.XML
+		admin load --path D:\WorkSpace-personal\hostel-inventory-3-20131117.XML
+		admin revenue --start_date --end_date
+		remember command prompt lo date format :  YYYYDDMM
+		revenue u need to give the when u have booked the order (mostly current dates)
+		admin occupancy --city --start_date 20140701 --end_date 20140603
+		
+	Examples: 
+		admin revenue :  here we need to give the dates in which date range of orders (orders placed date) we want to see revenue
+		admin revenue --start_date --end_date
+		admin occupancy
+		admin occupancy --city san --start_date 20140701 --end_date 20140603
+		admin occupancy --start_date 20140701 --end_date 20140603
+			
+		
+---------------------------------------------------------------------- 
+
+https://creately.com/app/#

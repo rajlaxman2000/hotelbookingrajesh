@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
+	<bean id="search.action" class="com.hostel.action.SearchAction">
+		<property name="searchService" ref="search.service" />
+	</bean>
+	
 	<!-- 
     <bean id="login.action" class="com.hostel.action.SampleAction" >
     	<property name="message" value="Hello World!" />
     </bean>
-     -->
+     
      <bean id="login.action" class="com.hostel.sample.SampleAction"/>
      <bean id="link.action" class="com.hostel.sample.LinkAction"/>
      
@@ -17,7 +21,7 @@
      	<property name="roomService" ref="room.service"/>
      </bean>
       
-      
+      -->
      
 </beans>
 

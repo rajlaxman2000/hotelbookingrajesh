@@ -6,6 +6,25 @@
 
 <tiles-definitions>
 
+   <definition name="hostelBaseLayout" template="/WEB-INF/jsp/hostel_base.jsp">
+      <put-attribute name="title"  value="Hostel Admin System"/>
+      <put-attribute name="header" value="/WEB-INF/jsp/top_nav.jsp"/>
+      <put-attribute name="body"   value="/WEB-INF/jsp/search.jsp"/>
+      <!-- 
+      <put-attribute name="menu"   value="/WEB-INF/jsp/tiles-integ/menu.jsp"/>
+      
+     
+       -->
+  </definition>
+  
+  
+  
+  <definition name="searchLayout" extends="hostelBaseLayout">
+      <put-attribute name="title"  value="Search Beds"/>
+      <put-attribute name="body"   value="/WEB-INF/jsp/search.jsp"/> 
+           
+  </definition>
+  
   <definition name="baseLayout" template="/WEB-INF/jsp/tiles-integ/baseLayout.jsp">
       <put-attribute name="title"  value="Template"/>
       <put-attribute name="header" value="/WEB-INF/jsp/tiles-integ/header.jsp"/>

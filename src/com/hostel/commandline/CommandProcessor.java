@@ -142,7 +142,7 @@ public class CommandProcessor {
 				searchResultDTO.setNoOfBeds(noOFBeds);
 				setSearchResultDTO(searchResultDTO);
 			}else{
-				System.out.println("There are no beds availabel for the given serach criteria, please try with new criteria");
+				System.out.println("There are no beds available for the given search criteria, please try with new criteria");
 			}	
 		} catch (Exception e) {
 			System.out.println("There is a problem to fetch the data by given criteria, please try again later");
@@ -173,7 +173,7 @@ public class CommandProcessor {
 		System.out.println("city name : " +cityName+",start date : "+ startDate+ ", End Date : "+ endDate+", beds : "+noOFBeds);		
 		
 		try {			
-			List<BedCostDTO> occupiedBeds = searchService.searchByCriteria(cityName, startDate, endDate, noOFBeds);
+			List<BedCostDTO> occupiedBeds = searchService.OccupiedBedCostDTOs(cityName, startDate, endDate);
 			if(occupiedBeds!=null && occupiedBeds.size()>0){
 				System.out.println( "-----------------------------------------------------------------------------------------------------------------");
 				Collections.sort(occupiedBeds);				
@@ -190,7 +190,7 @@ public class CommandProcessor {
 		}
 	
 		
-		System.out.println("I am in admin revenue section and good to go for servie class");	
+		//System.out.println("I am in admin revenue section and good to go for servie class");	
 	}
 	
 	
@@ -214,7 +214,7 @@ public class CommandProcessor {
 				System.out.println("No report avaibale for the given critera, please try with some other criteria");
 			}
 		} catch (Exception e) {
-			System.err.println("There was some problem in fetching the revenue, pleas etry again later");
+			System.err.println("There was some problem in fetching the revenue, please try again later");
 		}
 			
 		System.out.println("I am in admin revenue section and good to go for servie class");	
@@ -272,8 +272,8 @@ public class CommandProcessor {
 				System.out.println("***************************************************************");
 				for(OrderDTO order : orders){
 					System.out.println("----------------------------------------------------------------");
-					System.out.println("Order Id : "+order.getOrderId()+", Order amount : "+order.getOrderCost()+"Customer Email id ::"+order.getEmailId()+" Order palced Date"+order.getOrderPlcdDate());
-					System.out.println(" Order started Date : "+order.getOrderStartDate()+" Order End date : "+order.getOrderEndDate());
+					System.out.println("Order Id :: "+order.getOrderId()+", Order amount :: "+order.getOrderCost()+", Customer Email id ::"+order.getEmailId()+", Order palced Date:: "+order.getOrderPlcdDate());
+					System.out.println(" Order started Date :: "+order.getOrderStartDate()+", Order End date : "+order.getOrderEndDate());
 				}
 			}else{
 				System.out.println("There is no oders fo rthe given serach criteria, please try with new criteria");
@@ -324,10 +324,14 @@ public class CommandProcessor {
 				float cost = calculateOrderCost(this.searchResultDTO.getResultBedCosts(),startDate, endDate, bedIds);
 				orderDTO.setOrderCost(cost);
 				System.out.println("Calculated cost :: "+cost);
-				System.out.println("I am goog to go to service layer");
+				//System.out.println("I am goog to go to service layer");
 				try {
 					int orderId = orderService.createOrder(orderDTO);
-					//write some thing to get it printed  
+					//write some thing to get it printed
+					OrderDTO order = orderService.getOrderDetailsByOrderId(orderId);
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Order Id : "+order.getOrderId()+", Order amount : "+order.getOrderCost());
+					System.out.println(" Order started Date : "+order.getOrderStartDate()+" Order End date : "+order.getOrderEndDate());
 				} catch (Exception e) {
 					System.out.println("There is an problem to book order, please try again");
 					e.printStackTrace();

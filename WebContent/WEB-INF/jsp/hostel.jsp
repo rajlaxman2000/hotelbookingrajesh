@@ -9,9 +9,7 @@
 <title>List of all hostels</title>
 </head>
 <body>
-<%--<s:form action="contactlog/update" method="post" onsubmit="javascript:return validateData();">
-<s:form id="dashboardFrm" name="dashboardFrm" method="post"	action="agent/update" onsubmit="javascript:return isFormValid();"> 
---%>
+
 	<s:form action="rooms" method="post">
 	<h1>This will display all the hostels associated to Hostel-21 Brand</h1>
 	
@@ -20,14 +18,6 @@
 	Select : <s:select id="hostelId" name="hostelId" tabindex="true" headerKey="0" headerValue="Select" list="hostels" listKey="hostelId" listValue="hostelName" />
 	<s:submit  value="go"/>
 	</s:form>
-	<%--
-						<s:iterator var="loan" value="loans" status="rowstatus">
-							<tr class="alt_row">
-								<td><s:property value="#loan.agentAction.name" /></td>
-								<s:if test="#loan.noOfDaysLoanAssigned > 60">
-									<td></td>
-								</s:if>
-	 --%>
 	<div>
 	<s:iterator var="room" value="rooms" status="rowstatus" >
 		<tr><b>Room Name:</b> <s:property value="#room.roomName"/>		  
